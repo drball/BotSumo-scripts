@@ -7,7 +7,7 @@ function StartGame() {
 	LoadingPanel.SetActive(true);
 
 	//--track this event
-	Analytics.CustomEvent("asdasdasdas");
+	// Analytics.CustomEvent("asdasdasdas");
 	// Analytics.event("sdsf");
 	
 	Application.LoadLevel ("playerSelect");

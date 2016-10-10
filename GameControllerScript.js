@@ -156,7 +156,7 @@ function EndRound() {
 		//--show "play again" button
 		PlayAgainBtn.SetActive(true);
 
-		yield WaitForSeconds(2.5);
+		yield WaitForSeconds(1);
 
 		AdvertController.ShowAdvert();
 		
