@@ -50,6 +50,7 @@ function Start () {
 
 function FixedUpdate () 
 {
+	Debug.Log("x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
 		
 	if ((moving == true) && (alive == true)){
 	
@@ -71,8 +72,6 @@ function FixedUpdate ()
 		{
 	    	//GetComponent.<Rigidbody>().velocity = GetComponent.<Rigidbody>().velocity.normalized * speed;
 		}
-		
-		
 	
 	} else {
 		
@@ -156,9 +155,10 @@ function Timer(){
 	//--count how long it's been on it's side.
 	
 	//Debug.Log("z = "+transform.eulerAngles.z+"x = "+transform.eulerAngles.x);
-	if( ((transform.eulerAngles.x >= 250) && (transform.eulerAngles.x <= 300)) || ((transform.eulerAngles.z >= 250) && (transform.eulerAngles.z <= 300)) )
+	if( ((transform.eulerAngles.x >= 70) && (transform.eulerAngles.x <= 300)) || ((transform.eulerAngles.z >= 70) && (transform.eulerAngles.z <= 300)) )
 	{
 		badRotationTimer++;
+		Debug.Log("-------------------bad rot. x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
 	} else {
 		badRotationTimer = 0;
 	}

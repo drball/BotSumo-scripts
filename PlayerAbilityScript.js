@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 public var abilityActive : boolean = false;
-public var PlayerScript : PlayerScript;
+private var PlayerScript : PlayerScript;
 public var abilityCountDown : int = abilityCountDownInitial;
 
 private var normalScale : Vector3;
@@ -19,6 +19,13 @@ private var fireFromL : boolean; //--alternates whether fire from L or R
 private var fireRateNormal : float = 0.75;
 private var fireRate : float = fireRateNormal;
 
+//--vars for cog bot
+private var cogSpeedInitial : int;
+private var cog : GameObject;
+private var cogSpinScript : SpinTransform;
+private var cogSpinMax : int = 950;
+private var cogSpinCollider : int = 950;
+
 function Start () {
 	//GameController = GameObject.Find("GameController").GetComponent.<GameControllerScript>();
 	PlayerScript = GetComponent.<PlayerScript>();
@@ -29,17 +36,21 @@ function Start () {
 	
 	normalScale = transform.localScale;
 	normalMass = Rb.mass;
-//	normalSpeed = Rb.speed;
 		
 	InvokeRepeating("Countdown", 0, 1);
+
+	Debug.Log("player character is "+PlayerScript.playerCharacter);
 		
 	if(PlayerScript.playerCharacter == "B")
 	{	
 		BulletEmitter1 = transform.Find("BulletEmitter1").gameObject;
 		BulletEmitter2 = transform.Find("BulletEmitter2").gameObject;
 
-//		InvokeRepeating("FireBullet", 0, fireRate);
-
+	} else if (PlayerScript.playerCharacter == "Cog"){
+			cog = transform.Find("CogWrapper").gameObject;
+			cogSpinScript = cog.GetComponent.<SpinTransform>();
+			cogSpeedInitial = cogSpinScript.spinZ;
+			Debug.Log("cog spin value = "+cogSpeedInitial);
 	}
 	
 }
@@ -69,6 +80,15 @@ function ActivateAbility () {
 	if(PlayerScript.playerCharacter == "B")
 	{
 		InvokeRepeating("FireBullet", 0, fireRate);
+
+	}else if(PlayerScript.playerCharacter == "Cog") {
+
+		//--increase speed of spinning cog
+		cogSpinScript.spinZ = cogSpinScript.spinZ + cogSpeedInitial;
+		if(cogSpinScript.spinZ > cogSpinMax) {
+			cogSpinScript.spinZ = cogSpinMax;
+		}
+		Debug.Log("new cogspeed is "+cogSpinScript.spinZ);
 
 	}else {
 		//--default ability - make player bigger 
@@ -119,6 +139,10 @@ function DisableAbility() {
 	if(PlayerScript.playerCharacter == "B")
 	{
 		CancelInvoke("FireBullet");
+
+	} else if(PlayerScript.playerCharacter == "Cog"){
+		cogSpinScript.spinZ = cogSpeedInitial;
+
 	}else {
 		//--put player back to normal mass
 		Rb.mass = normalMass;

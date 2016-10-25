@@ -10,6 +10,8 @@ public var p2GameObjects : GameObject[]; //--array of characters
 public var P1Btn : GameObject;	//--ref to btn for disabling it
 public var P2Btn : GameObject;	//--ref to btn for disabling it
 public var LoadingPanel : GameObject;
+public var P1WaitMsg : GameObject;
+public var P2WaitMsg : GameObject;
 
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
@@ -29,6 +31,9 @@ function Start () {
 	p2SelectedCharString = "";
 	
 	LoadingPanel.SetActive(false);
+
+	P1WaitMsg.SetActive(false);
+	P2WaitMsg.SetActive(false);
 	
 }
 
@@ -40,9 +45,11 @@ function selectCharacter(playerNum : int) {
 		Debug.Log("playerCharacters[p1VisibleChar] = "+playerCharacters[p1VisibleChar]);
 		p1SelectedCharString = playerCharacters[p1VisibleChar];
 		P1Btn.SetActive(false);
+		P1WaitMsg.SetActive(true);
 	}else {
 		p2SelectedCharString = playerCharacters[p2VisibleChar];
 		P2Btn.SetActive(false);
+		P2WaitMsg.SetActive(true);
 	}
 	
 	//--load next level if both selected
@@ -71,6 +78,12 @@ function showOnlyP1Character (charToShow : int) {
 	
 	//--show the selected char
 	p1GameObjects[charToShow].SetActive(true);
+
+	if(charToShow == 4){
+		Debug.Log("p1 has selected cog");
+		// P1Btn.SetActive(false);
+		P1Btn.GetComponent.<Button>().interactable = false;
+	}
 }
 
 function showOnlyP2Character (charToShow : int) {
@@ -84,25 +97,36 @@ function showOnlyP2Character (charToShow : int) {
 	
 	//--show the selected char
 	p2GameObjects[charToShow].SetActive(true);
-//	Debug.Log("p2 show "+charToShow);
+
+	if(charToShow == 4){
+		Debug.Log("p1 has selected cog");
+		P2Btn.GetComponent.<Button>().interactable = false;
+	}
 }
 
 function NextCharacter (playerNum : int) {
 	
 	if (playerNum == 1) {
 		p1VisibleChar++;
+
+		P1Btn.GetComponent.<Button>().interactable = true; //--enable because "coming soon" bot might have disabled it
 		
+		//-- show only next  character (or reset)
 		if(p1VisibleChar >= p1GameObjects.length) {
 			p1VisibleChar = 0;
 		}
 		showOnlyP1Character(p1VisibleChar);
-	}else {
+
+	} else {
 		p2VisibleChar++;
+
+		P2Btn.GetComponent.<Button>().interactable = true; //--enable because "coming soon" bot might have disabled it
 		
 		if(p2VisibleChar >= p2GameObjects.length) {
 			p2VisibleChar = 0;
 		}
 		showOnlyP2Character(p2VisibleChar);
+
 	}
 	
 }

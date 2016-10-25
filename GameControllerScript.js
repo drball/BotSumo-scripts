@@ -13,7 +13,7 @@ public var LInstruction : GameObject;
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
-private var defaultPlayer : String = "SpinningArms";
+private var defaultPlayer : String = "A";
 private var AdvertController : AdvertController;
 
 
@@ -70,7 +70,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1SpinningArms";
+			playerToLoad = "Player1A";
 		}
 	}
 	
