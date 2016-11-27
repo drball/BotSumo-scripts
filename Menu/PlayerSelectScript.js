@@ -3,7 +3,7 @@
 //static var playerSelection : Hashtable; //--chosen characters
 
 //--create array of the possible different player characters 
-public var playerCharacters = new Array ("A", "B", "C", "SpinningArms");
+public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog");
 
 public var p1GameObjects : GameObject[]; //--array of characters
 public var p2GameObjects : GameObject[]; //--array of characters
@@ -12,10 +12,15 @@ public var P2Btn : GameObject;	//--ref to btn for disabling it
 public var LoadingPanel : GameObject;
 public var P1WaitMsg : GameObject;
 public var P2WaitMsg : GameObject;
+public var UnlockP1CogBtn : GameObject;
+public var UnlockP2CogBtn : GameObject;
+public var UnlockModal : GameObject;
 
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
 private var p2VisibleChar = 0;
+private var isCogUnlocked : int = 0;
+
 
 //--the selected character - these used in the next scene
 static var p1SelectedCharString; 
@@ -34,7 +39,13 @@ function Start () {
 
 	P1WaitMsg.SetActive(false);
 	P2WaitMsg.SetActive(false);
-	
+
+	//--check whether cogbot has been unlocked 
+	isCogUnlocked = PlayerPrefs.GetInt("UnlockedCog");
+
+	Debug.Log("cogbot unlocked = "+isCogUnlocked);
+
+	closeUnlockModal();
 }
 
 function selectCharacter(playerNum : int) {
@@ -63,8 +74,6 @@ function selectCharacter(playerNum : int) {
 		//--load the main level
 		Application.LoadLevel ("main");
 	}
-	
-	
 }
 
 function showOnlyP1Character (charToShow : int) {
@@ -79,10 +88,14 @@ function showOnlyP1Character (charToShow : int) {
 	//--show the selected char
 	p1GameObjects[charToShow].SetActive(true);
 
-	if(charToShow == 4){
+	if((charToShow == 4) && (!isCogUnlocked)){
 		Debug.Log("p1 has selected cog");
-		// P1Btn.SetActive(false);
-		P1Btn.GetComponent.<Button>().interactable = false;
+		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP1CogBtn.SetActive(true);
+
+	} else {
+		UnlockP1CogBtn.SetActive(false);
 	}
 }
 
@@ -99,8 +112,8 @@ function showOnlyP2Character (charToShow : int) {
 	p2GameObjects[charToShow].SetActive(true);
 
 	if(charToShow == 4){
-		Debug.Log("p1 has selected cog");
-		P2Btn.GetComponent.<Button>().interactable = false;
+		Debug.Log("p2 has selected cog");
+		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 	}
 }
 
@@ -135,6 +148,8 @@ function PrevCharacter (playerNum : int) {
 	
 	if (playerNum == 1) {
 		p1VisibleChar--;
+
+		P1Btn.GetComponent.<Button>().interactable = true; //--enable because "coming soon" bot might have disabled it
 		
 		if(p1VisibleChar < 0) {
 			p1VisibleChar = p1GameObjects.length - 1;
@@ -142,10 +157,31 @@ function PrevCharacter (playerNum : int) {
 		showOnlyP1Character(p1VisibleChar);
 	}else {
 		p2VisibleChar--;
+
+		P2Btn.GetComponent.<Button>().interactable = true; //--enable because "coming soon" bot might have disabled it
 		
 		if(p2VisibleChar < 0) {
 			p2VisibleChar = p2GameObjects.length - 1;
 		}
 		showOnlyP2Character(p2VisibleChar);
 	}
+}
+
+function showUnlockModal() {
+
+	// Debug.Log("unlocking char="+character);
+	UnlockModal.SetActive(true);
+}
+
+// function unlockCharacter (character : String) {
+// 	//--unlock button has been pressed
+// 	//--character is string from the button
+
+// 	Debug.Log("unlocking char="+character);
+
+// 	// PlayerPrefs.SetInt("UnlockedCog", 1);
+// }
+
+function closeUnlockModal(){
+	UnlockModal.SetActive(false);
 }

@@ -25,9 +25,16 @@ function FixedUpdate () {
 }
 
 function ShowAdvert(){
+	//--show a normal ad - at the end of a round
 	Debug.Log("show ad");
 	if(Advertisement.isInitialized && Advertisement.IsReady()) {
 		Advertisement.Show();
 	}
 }
+
+function ShowRewardedAd(){
+	// var options : ShowOptions = new ShowOptions();
+ //        options.resultCallback = HandleShowResult;
+}
+
 
