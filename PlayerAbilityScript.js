@@ -20,9 +20,12 @@ private var fireRateNormal : float = 0.75;
 private var fireRate : float = fireRateNormal;
 
 //--vars for cog bot
-private var cogSpeedInitial : int;
+private var cogSpeedInitial : int; //--get this from cogSpinScript
 private var cog : GameObject;
+// private var cogColliderObj : GameObject;
+private var cogCollider : Collider;
 private var cogSpinScript : SpinTransform;
+private var bounceBackScript : BounceBack;
 private var cogSpinMax : int = 950;
 private var cogSpinCollider : int = 950;
 
@@ -50,6 +53,7 @@ function Start () {
 			cog = transform.Find("CogWrapper").gameObject;
 			cogSpinScript = cog.GetComponent.<SpinTransform>();
 			cogSpeedInitial = cogSpinScript.spinZ;
+			bounceBackScript = transform.Find("TriggerCollider").gameObject.GetComponent.<BounceBack>();
 			Debug.Log("cog spin value = "+cogSpeedInitial);
 	}
 	
@@ -71,7 +75,7 @@ function Countdown(){
 function ActivateAbility () {
 
 	abilityActive = true;
-//	Debug.Log("ability active");
+	Debug.Log("ability active");
 	
 	//--pause player for a bit - whilst flashing
 	PlayerScript.alive = false;
@@ -89,6 +93,7 @@ function ActivateAbility () {
 			cogSpinScript.spinZ = cogSpinMax;
 		}
 		Debug.Log("new cogspeed is "+cogSpinScript.spinZ);
+		bounceBackScript.ChangeForceAmt(cogSpinScript.spinZ);
 
 	}else {
 		//--default ability - make player bigger 
@@ -142,6 +147,7 @@ function DisableAbility() {
 
 	} else if(PlayerScript.playerCharacter == "Cog"){
 		cogSpinScript.spinZ = cogSpeedInitial;
+		bounceBackScript.ResetForceAmt();
 
 	}else {
 		//--put player back to normal mass

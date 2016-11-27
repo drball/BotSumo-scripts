@@ -55,6 +55,17 @@ function OnTriggerEnter(other: Collider)
 		if(collidingPlayer != null)
         {   
             collidingPlayer.ActivateAbility();
+        } else {
+        	Debug.Log("sdfdsf");
+        	//--maybe we couldn't find the script because this player has a separate mesh collider
+        	//--so look for script on its parent
+        	collidingPlayer = other.transform.parent.gameObject.GetComponent.<PlayerAbilityScript>();
+
+        	if(collidingPlayer != null)
+        	{
+    			Debug.Log("getting playerscript of cogplayer");
+        		collidingPlayer.ActivateAbility();
+        	}
         }
 		
 		//--destory pickup, but schedule a new one

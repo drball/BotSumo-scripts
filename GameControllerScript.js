@@ -13,7 +13,7 @@ public var LInstruction : GameObject;
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
-private var defaultPlayer : String = "A";
+private var defaultPlayer : String = "Cog"; //A B C Cog, SpinningArms
 private var AdvertController : AdvertController;
 
 
@@ -70,10 +70,11 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1A";
+			playerToLoad = "Player1Cog";
 		}
 	}
 	
+	Destroy(PlayerDummy);
 	
 	//--load from "resources"
 	var playerInstance : GameObject = Instantiate(Resources.Load(playerToLoad, GameObject),
@@ -81,7 +82,6 @@ function LoadPlayer(dummyObjName, playerNum){
 		PlayerDummy.transform.rotation
 	);
 	
-	Destroy(PlayerDummy);
 	
 	return playerInstance;
 }

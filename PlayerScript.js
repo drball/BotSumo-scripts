@@ -50,7 +50,7 @@ function Start () {
 
 function FixedUpdate () 
 {
-	Debug.Log("x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
+	// Debug.Log("x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
 		
 	if ((moving == true) && (alive == true)){
 	
@@ -158,7 +158,7 @@ function Timer(){
 	if( ((transform.eulerAngles.x >= 70) && (transform.eulerAngles.x <= 300)) || ((transform.eulerAngles.z >= 70) && (transform.eulerAngles.z <= 300)) )
 	{
 		badRotationTimer++;
-		Debug.Log("-------------------bad rot. x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
+		// Debug.Log("-------------------bad rot. x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
 	} else {
 		badRotationTimer = 0;
 	}
