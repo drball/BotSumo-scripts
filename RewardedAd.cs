@@ -40,7 +40,7 @@ public class RewardedAd : MonoBehaviour
         {
         case ShowResult.Finished:
             Debug.Log ("Video completed. User rewarded ");
-            UnlockCogCharacter();
+            SendMessage("unlockCog");
             break;
         case ShowResult.Skipped:
             Debug.LogWarning ("Video was skipped.");
@@ -51,8 +51,4 @@ public class RewardedAd : MonoBehaviour
         }
     }
 
-    public void UnlockCogCharacter () {
-		Debug.Log("setting the cog character playerpref");
-    	PlayerPrefs.SetInt("UnlockedCog", 1);
-    }
 }

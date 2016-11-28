@@ -111,9 +111,14 @@ function showOnlyP2Character (charToShow : int) {
 	//--show the selected char
 	p2GameObjects[charToShow].SetActive(true);
 
-	if(charToShow == 4){
+	if((charToShow == 4) && (!isCogUnlocked)){
 		Debug.Log("p2 has selected cog");
 		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP2CogBtn.SetActive(true);
+
+	} else {
+		UnlockP2CogBtn.SetActive(false);
 	}
 }
 
@@ -184,4 +189,15 @@ function showUnlockModal() {
 
 function closeUnlockModal(){
 	UnlockModal.SetActive(false);
+}
+
+function unlockCog(){
+	//--called by a sendmessage
+	Debug.Log("unlocking cog by sendmessage");
+	PlayerPrefs.SetInt("UnlockedCog", 1);
+	isCogUnlocked = 1;
+	UnlockP1CogBtn.SetActive(false);
+	UnlockP2CogBtn.SetActive(false);
+	P1Btn.GetComponent.<Button>().interactable = true;
+	P2Btn.GetComponent.<Button>().interactable = true;
 }

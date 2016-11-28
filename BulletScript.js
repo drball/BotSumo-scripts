@@ -4,7 +4,7 @@ public var speed = 1;
 public var Vfx : GameObject;
 public var ParticleObj : GameObject;
 public var Owner : GameObject; //--discount this from any collisions
-public var forceAmount : float = 50;
+public var forceAmount : float = 200;
 public var radius : float = 1.0;
 public var ignoreLayers : LayerMask;
 
@@ -46,7 +46,7 @@ function OnTriggerEnter(other: Collider)
 			
 			if(other.tag == "Player") {
 				//--apply more force when hitting player
-				forceAmount = forceAmount*3;
+				forceAmount = forceAmount*5;
 			}
 			var force : Vector3 = tr.forward * forceAmount;
 			
