@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
-public var rotationSpeed : float = .5;
-public var speed : float = 1;
-public var moving : boolean = false;
+// public var rotationSpeed : float = .5;
+// public var speed : float = 1;
+
 public var GameController : GameControllerScript;
 public var alive = true;
 public var score : int = 0;
@@ -16,7 +16,7 @@ private var fallingYPos : float = -2;
 private var badRotationTimer : int;
 private var startingPos : Vector3;
 private var startingRotation : Quaternion;
-private var Btn : GameObject; //--the button for this player (used for hiding the instruction)
+static var Btn : GameObject; //--the button for this player (used for hiding the instruction)
 
 
 function Start () {
@@ -32,10 +32,6 @@ function Start () {
 	Respot();
 
 	var rb = GetComponent.<Rigidbody>();
-	// rb.centerOfMass = Vector3(0,-1,0);
-	// Debug.Log("rb = "+rb.centerOfMass);
-	
-//	Debug.Log("ypos"+transform.position.y);
 	
 	if(playerNum == 1){
 		Btn = GameObject.Find("LInstruction");
@@ -43,54 +39,11 @@ function Start () {
 		Btn = GameObject.Find("RInstruction");
 		
 	}
-	
+
+
 	
 }
 
-
-function FixedUpdate () 
-{
-	// Debug.Log("x="+transform.eulerAngles.x+" y="+transform.eulerAngles.y+" z ="+transform.eulerAngles.z);
-		
-	if ((moving == true) && (alive == true)){
-	
-		//-- stop it rotating
-		GetComponent.<Rigidbody>().angularVelocity = Vector3.zero;
-	
-		//-- move forward
-		GetComponent.<Rigidbody>().AddRelativeForce (Vector3.forward * speed, ForceMode.Impulse);
-		//var direction : Vector3 = Vector3.forward * speed;
-		//Debug.Log("direction"+direction);
-		//GetComponent.<Rigidbody>().AddForceAtPosition(direction, transform.position);
-		transform.Translate(Vector3.forward * speed * Time.deltaTime);
-	
-		
-		//Debug.Log("speed = "+speed+" magniture = "+GetComponent.<Rigidbody>().velocity.magnitude);
-		
-		//--if gets too fast, constrain speed
-		if (GetComponent.<Rigidbody>().velocity.magnitude > speed) 
-		{
-	    	//GetComponent.<Rigidbody>().velocity = GetComponent.<Rigidbody>().velocity.normalized * speed;
-		}
-	
-	} else {
-		
-//		GetComponent.<Rigidbody>().AddRelativeTorque (0,rotationSpeed,0, ForceMode.Impulse);
-		
-		//Debug.Log("angularVelocity = "+GetComponent.<Rigidbody>().angularVelocity+" magniture = "+GetComponent.<Rigidbody>().angularVelocity.magnitude);
-		
-		
-//		if ((GetComponent.<Rigidbody>().angularVelocity.magnitude > rotationSpeed) || (GetComponent.<Rigidbody>().angularVelocity.magnitude < rotationSpeed)) 
-//		{
-//	 		Debug.Log("over");
-//	    	GetComponent.<Rigidbody>().angularVelocity = GetComponent.<Rigidbody>().velocity.normalized * rotationSpeed;
-//		}
-
-		//-- rotate the player
-		transform.Rotate((Vector3.up * rotationSpeed) * Time.deltaTime);
-	}
-
-}
 
 function Update() {
 
@@ -105,24 +58,6 @@ function Update() {
 	}
 }
 
-
-function Move(localmoving : boolean) {
-	//--called when the button is pressed or stopped pressing 
-	moving = localmoving; //--assign to public var
-	
-	if((localmoving == false) && (alive == true)){
-		//--switch spin direction
-		rotationSpeed = -rotationSpeed;
-	}
-	
-	if(!hasMoved){
-		hasMoved = true;
-		
-		//--fade the instruction out for this player's control btn
-		Btn.GetComponent.<Animator>().Play("FadeOut");
-	}
-
-}
 
 function Respot(){
 	//--reset position

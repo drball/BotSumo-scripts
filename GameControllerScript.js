@@ -4,10 +4,13 @@ import UnityEngine.UI;
 public var ScoreModal : GameObject;
 public var Player1 : PlayerScript;
 public var Player2 : PlayerScript;
+public var Player1Movement : PlayerMovement;
+public var Player2Movement : PlayerMovement;
 public var roundActive : boolean = true;
 public var Player1ScoreText : GameObject;
 public var Player2ScoreText : GameObject;
 public var PlayAgainBtn : GameObject;
+public var SinglePlayer : boolean = false;
 
 public var LInstruction : GameObject;
 public var RInstruction : GameObject;
@@ -21,13 +24,11 @@ function Start () {
 	//--hide the score modal so we can show it later
 	ScoreModal.SetActive(false);
 	
-	//--load the chosen player dynamically based on what was chosen
-	
-	
-	//Player1 = player1Instance.transform.GetComponent.<PlayerScript>();
 	Player1 = LoadPlayer("Player1Dummy", 1).transform.GetComponent.<PlayerScript>();
 	Player2 = LoadPlayer("Player2Dummy", 2).transform.GetComponent.<PlayerScript>();
 //	Player2 = GameObject.Find("Player2Dummy").GetComponent.<PlayerScript>();
+	Player1Movement = Player1.GetComponent.<PlayerMovement>();
+	Player2Movement = Player2.GetComponent.<PlayerMovement>();
 	
 	//--hide the "play again" button initially, so we can show it later
 	PlayAgainBtn.SetActive(false);
@@ -43,6 +44,13 @@ function Start () {
 		Player2.playerCharacter = PlayerSelectScript.p2SelectedCharString;
 	}else {
 		Player2.playerCharacter = defaultPlayer;
+	}
+
+	//--if the game is single player, disable the normal player movement script
+	//--and activate the cpu player script instead
+	if(SinglePlayer) {
+		Player2.GetComponent.<PlayerMovement>().enabled = false;
+		Player2.GetComponent.<CpuPlayerMovement>().enabled = true;
 	}
 
 	//--get the advert script
@@ -211,13 +219,13 @@ function PlayAgain (){
 function MovePlayer1(moving : boolean){
 
 	//--called when the button is pressed or stopped pressing - pass this to player
-	Player1.Move(moving);
+	Player1Movement.Move(moving);
 }
 
 function MovePlayer2(moving : boolean){
 
 	//--called when the button is pressed or stopped pressing - pass this to player
-	Player2.Move(moving);
+	Player2Movement.Move(moving);
 	
 }
 
@@ -225,19 +233,19 @@ function MovePlayer2(moving : boolean){
 //--for debug
 function FixedUpdate () {
 	if(Input.GetKey(KeyCode.LeftArrow)) {
-		Player1.Move(true);
+		Player1Movement.Move(true);
 	}
 
 	if (Input.GetKeyUp(KeyCode.LeftArrow)){
-		Player1.Move(false);
+		Player1Movement.Move(false);
 	}
 	
 	if(Input.GetKey(KeyCode.RightArrow)) {
-		Player2.Move(true);
+		Player2Movement.Move(true);
 	}
 
 	if (Input.GetKeyUp(KeyCode.RightArrow)){
-		Player2.Move(false);
+		Player2Movement.Move(false);
 	}
 }
 
