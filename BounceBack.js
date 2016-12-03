@@ -1,18 +1,18 @@
 ﻿#pragma strict
 
-private var coll : Collider;
+// private var coll : Collider;
 private var forceAmtInitial : float = 110;
 // private var cog : GameObject;
 // private var cogSpinScript : SpinTransform;
 private var forceAmt : float = forceAmtInitial;
 public var PlayerCharacter : GameObject;
-private var otherRb : Rigidbody;
+// private var otherRb : Rigidbody;
 
 function Start () {
 
-	coll = GetComponent.<Collider>();
+	// coll = GetComponent.<Collider>();
 	// Debug.Log("start forward = "+PlayerCharacter.transform.forward);
-	// Debug.Log("initial force = "+forceAmt);
+	Debug.Log("initial force = "+forceAmt);
 }
 
 function ChangeForceAmt (cogSpeed : float){
@@ -22,41 +22,78 @@ function ChangeForceAmt (cogSpeed : float){
 }
 
 function ResetForceAmt(){
+	Debug.Log("reset forceamt");
 	forceAmt = forceAmtInitial;
+	
 }
 
-function OnTriggerEnter (other : Collider) 
+function FixedUpdate () {
+
+	//--show an ad if spacebar is pressed
+	if(Input.GetKey("up") ) {
+		Debug.Log("forcemt = "+forceAmt);
+		forceAmt += 10;
+		Debug.Log("new forcemt = "+forceAmt);
+	}
+}
+
+// function OnTriggerEnter (other : Collider) {
+// 	Debug.Log("forcemt = "+forceAmt);
+// 	forceAmt += 10;
+// 		Debug.Log("new forcemt = "+forceAmt);
+// }
+function OnCollisionEnter (collision : Collision) 
 {
+	// forceAmt += 200;
+	forceAmt = forceAmt;
 
-	if(other.tag == "Player") {
-		otherRb = other.GetComponent.<Rigidbody>();
+	// for (var contact : ContactPoint in collision.contacts) {
 
-		if(!otherRb){
-			//-maybe this player has a separate rb & collider - try the parent
-			otherRb = other.transform.parent.gameObject.GetComponent.<Rigidbody>();
+		var contact : ContactPoint = collision.contacts[0];
+
+		var other : GameObject = contact.otherCollider.gameObject;
+
+		if(other.tag == "Player" || other.tag == "Box") {
+
+			//--create some sparks when we hit the other
+			var pos: Vector3 = contact.point;
+			Debug.Log(contact.thisCollider.name + " hit " + contact.otherCollider.name+"at position "+pos);
+
+			var sparkInstance : GameObject = Instantiate(Resources.Load("Spark", GameObject),
+				pos, 
+				Quaternion.identity
+			);
+
+			Destroy(sparkInstance,3);
+
+			var otherRb : Rigidbody = other.GetComponent.<Rigidbody>();
+
+			if(!otherRb){
+				//-maybe this object has a separate rb & collider - try the parent
+				otherRb = other.transform.parent.gameObject.GetComponent.<Rigidbody>();
+			}
+
 		}
-	} else {
-		otherRb = other.GetComponent.<Rigidbody>();
-	}
 
-	if (otherRb) {
 		
-		// Apply force to the target object - calculate force
+		if (otherRb) {
+			
+			// Apply force to the target object - calculate force
 
-		var forceAmtLocal = forceAmt;
-		var directionToOther = other.transform.position - PlayerCharacter.transform.position;
-		
-		if(other.tag == "Player") {
-			//--apply more force when hitting player
-			forceAmtLocal = forceAmt + 300;
-		} 
-		Debug.Log("cog apply force of "+forceAmtLocal+" to "+other.name);
-		
-		otherRb.AddForce((directionToOther * forceAmtLocal), ForceMode.Impulse);
-		otherRb.AddTorque(transform.up * 450, ForceMode.Impulse);
-		
-	}
+			var forceAmtLocal : float = forceAmt;
+			var directionToOther = other.transform.position - PlayerCharacter.transform.position;
+			
+			if(other.tag == "Player") {
+				//--apply more force when hitting player
+				forceAmtLocal = forceAmt + 300;
+			} 
+			Debug.Log("---cog apply force of "+forceAmtLocal+" to "+other.name+" forcemat = "+forceAmt);
 
-	
+			otherRb.AddForce((directionToOther * forceAmtLocal), ForceMode.Impulse);
+			otherRb.AddTorque(transform.up * 450, ForceMode.Impulse);
+			
+		}
+		
+	// }
 	
 }

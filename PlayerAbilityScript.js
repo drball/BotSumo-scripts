@@ -53,7 +53,7 @@ function Start () {
 			cog = transform.Find("CogWrapper").gameObject;
 			cogSpinScript = cog.GetComponent.<SpinTransform>();
 			cogSpeedInitial = cogSpinScript.spinZ;
-			bounceBackScript = transform.Find("TriggerCollider").gameObject.GetComponent.<BounceBack>();
+			bounceBackScript = GetComponent.<BounceBack>();
 			Debug.Log("cog spin value = "+cogSpeedInitial);
 	}
 	
