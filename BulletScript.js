@@ -33,7 +33,7 @@ function FixedUpdate () {
 
 function OnTriggerEnter(other: Collider) 
 {
-	if(other.gameObject == Owner) {
+	if((other.gameObject == Owner) || (other.gameObject.name == "Shield")) {
 
 		Debug.Log("hitting self");
 		

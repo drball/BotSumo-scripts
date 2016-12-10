@@ -11,6 +11,7 @@ public var theParticle : GameObject;
 public var vfxObj : GameObject;
 
 
+
 function Start () {
 	//--find gameController so we can call functions
 	gameController = GameObject.Find("GameController").GetComponent.<GameControllerScript>();
@@ -46,23 +47,24 @@ function OnTriggerEnter(other: Collider)
 	//--when player touches pickup
 	if (other.tag == "Player" && isCollectable)
 	{
-		Debug.Log("pickyup touching player");
+		Debug.Log("shield touching player");
 	    collectionSfx.Play();
 	        
-		var collidingPlayer : PlayerAbilityScript = other.gameObject.GetComponent.<PlayerAbilityScript>();
+		var collidingPlayer : ShieldController = other.gameObject.GetComponent.<ShieldController>();
 				
 		if(collidingPlayer != null)
         {   
-            collidingPlayer.ActivateAbility();
+            collidingPlayer.ActivateShield();
         } else {
+
         	//--maybe we couldn't find the script because this player has a separate mesh collider
         	//--so look for script on its parent
-        	collidingPlayer = other.transform.parent.gameObject.GetComponent.<PlayerAbilityScript>();
+        	collidingPlayer = other.transform.parent.gameObject.GetComponent.<ShieldController>();
 
         	if(collidingPlayer != null)
         	{
     			Debug.Log("getting playerscript of cogplayer");
-        		collidingPlayer.ActivateAbility();
+        		collidingPlayer.ActivateShield();
         	}
         }
 		
@@ -74,8 +76,6 @@ function OnTriggerEnter(other: Collider)
 	    yield WaitForSeconds (3);
 	    
 	    Destroy(gameObject);
-
-		pickupsController.SchedulePickup();
 	    
 	}
 

@@ -16,7 +16,7 @@ public var LInstruction : GameObject;
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
-private var defaultPlayer : String = "Cog"; //A B C Cog, SpinningArms
+private var defaultPlayer : String = "A"; //A B C Cog, SpinningArms
 private var AdvertController : AdvertController;
 
 
@@ -26,7 +26,6 @@ function Start () {
 	
 	Player1 = LoadPlayer("Player1Dummy", 1).transform.GetComponent.<PlayerScript>();
 	Player2 = LoadPlayer("Player2Dummy", 2).transform.GetComponent.<PlayerScript>();
-//	Player2 = GameObject.Find("Player2Dummy").GetComponent.<PlayerScript>();
 	Player1Movement = Player1.GetComponent.<PlayerMovement>();
 	Player2Movement = Player2.GetComponent.<PlayerMovement>();
 	
@@ -78,7 +77,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1Cog";
+			playerToLoad = "Player1B";
 		}
 	}
 	

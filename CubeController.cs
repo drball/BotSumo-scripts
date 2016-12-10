@@ -12,13 +12,9 @@ public class CubeController : MonoBehaviour {
 		InvokeRepeating("CheckCubeAmt", 10, 10);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void CheckCubeAmt() {
-		Debug.Log("new cube has arrived");
+		
 
 		// yield return new WaitForSeconds(5);
 
@@ -37,6 +33,8 @@ public class CubeController : MonoBehaviour {
 				),
 				Random.rotation
 			) as GameObject;
+
+			Debug.Log("new cube has arrived");
 		}
 
 	}
