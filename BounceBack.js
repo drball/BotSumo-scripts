@@ -18,7 +18,7 @@ function ChangeForceAmt (cogSpeed : float){
 }
 
 function ResetForceAmt(){
-	Debug.Log("reset forceamt");
+	// Debug.Log("reset forceamt");
 	forceAmt = forceAmtInitial;
 	
 }
@@ -42,13 +42,13 @@ function OnCollisionEnter (collision : Collision)
 
 	var other : GameObject = contact.otherCollider.gameObject;
 
-	Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
+	// Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
 
 	if(other.tag == "Player" || other.tag == "Box") {
 
 		//--create some sparks when we hit the other
 		var pos: Vector3 = contact.point;
-		Debug.Log(contact.thisCollider.name + " hit " + contact.otherCollider.name+"at position "+pos);
+		// Debug.Log(contact.thisCollider.name + " hit " + contact.otherCollider.name+"at position "+pos);
 
 		var sparkInstance : GameObject = Instantiate(Resources.Load("Spark", GameObject),
 			pos, 
@@ -78,7 +78,7 @@ function OnCollisionEnter (collision : Collision)
 			//--apply more force when hitting player
 			forceAmtLocal = forceAmt + 300;
 		} 
-		Debug.Log("---cog apply force of "+forceAmtLocal+" to "+other.name+" forcemat = "+forceAmt);
+		// Debug.Log("---cog apply force of "+forceAmtLocal+" to "+other.name+" forcemat = "+forceAmt);
 
 		otherRb.AddForce((directionToOther * forceAmtLocal), ForceMode.Impulse);
 		otherRb.AddTorque(transform.up * 450, ForceMode.Impulse);

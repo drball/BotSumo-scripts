@@ -35,7 +35,17 @@ public class CubeController : MonoBehaviour {
 			) as GameObject;
 
 			Debug.Log("new cube has arrived");
+
+			if(currentCubes.Length < 1){
+				Debug.Log("all cubes gone");
+
+				//--create a new shield pickup if there isn't one already 
+				SendMessage("CreateShieldPickup");
+
+			}
 		}
+
+		
 
 	}
 
