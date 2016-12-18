@@ -12,10 +12,6 @@ function Start () {
 	rb = GetComponent.<Rigidbody>();
 }
 
-function Update () {
-
-}
-
 function FixedUpdate () 
 {
 	if ((moving == true) && (PlayerController.alive == true)){

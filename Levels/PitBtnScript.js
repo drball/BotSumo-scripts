@@ -2,35 +2,52 @@
 
 private var startPos : float;
 private var pushedPos : float;
+private var initialColor : Color;
+private var rend: Renderer;
+var highlightColor : Color;
+
+public var PitObj : GameObject;
+public var pressed : boolean = false;
+private var PitObjScript : PitPitScript;
 
 function Start () {
 	startPos = gameObject.transform.position.z;
 	pushedPos = startPos + 0.2;
 
-}
+	rend = GetComponent.<Renderer>();
 
-function Update () {
-	
+	initialColor = rend.material.color;
+
+	PitObjScript = PitObj.GetComponent.<PitPitScript>();
 }
 
 function OnCollisionEnter (collision : Collision) 
 {
-
-
 	var contact : ContactPoint = collision.contacts[0];
 
 	var other : GameObject = contact.otherCollider.gameObject;
 
 	// Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name+" impulse was "+collision.impulse.magnitude);
 
-	if(other.tag == "Player" && collision.impulse.magnitude > 10) {
+	if(other.tag == "Player" && collision.impulse.magnitude > 10 && pressed == false) {
 		Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
+
+		pressed = true;
 
 		//--depress the button
 		gameObject.transform.position.z = pushedPos;
+		rend.material.color = highlightColor;
 
-		yield WaitForSeconds(3);
+		//--drop the pit!
+		PitObjScript.DropPit();
+
+		//--restore button
+		yield WaitForSeconds(15);
 
 		gameObject.transform.position.z = startPos;
+		pressed = false;
+		rend.material.color = initialColor;
+
+		
 	}
 }
