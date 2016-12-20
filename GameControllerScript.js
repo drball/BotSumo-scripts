@@ -18,7 +18,7 @@ public var RInstruction : GameObject;
 private var winningScore : int = 5;
 private var defaultPlayer : String = "C"; //A B C Cog, SpinningArms
 private var AdvertController : AdvertController;
-
+private var LevelsController : LevelsController;
 
 function Start () {
 	//--hide the score modal so we can show it later
@@ -54,6 +54,8 @@ function Start () {
 
 	//--get the advert script
 	AdvertController = GetComponent.<AdvertController>();
+
+	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
 	
 }
 
@@ -211,7 +213,7 @@ function PlayAgain (){
 	Player2ScoreText.GetComponent.<Text>().text = "0";
 	
 	//--reload entire scene
-	Application.LoadLevel ("main");
+	LevelsController.LoadSelectedLevel();
 	
 }
 

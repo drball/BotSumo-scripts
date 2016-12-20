@@ -20,7 +20,8 @@ private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
 private var p2VisibleChar = 0;
 private var isCogUnlocked : int = 0;
-
+private var LevelsController : LevelsController;
+private var VersionController : VersionController;
 
 //--the selected character - these used in the next scene
 static var p1SelectedCharString; 
@@ -44,6 +45,10 @@ function Start () {
 	isCogUnlocked = PlayerPrefs.GetInt("UnlockedCog");
 
 	Debug.Log("cogbot unlocked = "+isCogUnlocked);
+
+	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
+
+	VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
 
 	closeUnlockModal();
 }
@@ -72,7 +77,7 @@ function selectCharacter(playerNum : int) {
 		LoadingPanel.SetActive(true);
 		
 		//--load the main level
-		Application.LoadLevel ("main");
+		LevelsController.LoadSelectedLevel();
 	}
 }
 
@@ -88,7 +93,7 @@ function showOnlyP1Character (charToShow : int) {
 	//--show the selected char
 	p1GameObjects[charToShow].SetActive(true);
 
-	if((charToShow == 4) && (!isCogUnlocked)){
+	if((charToShow == 4) && (!isCogUnlocked) && (VersionController.paidVersion == false)){
 		Debug.Log("p1 has selected cog");
 		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 		//--show unlock button 
@@ -111,7 +116,7 @@ function showOnlyP2Character (charToShow : int) {
 	//--show the selected char
 	p2GameObjects[charToShow].SetActive(true);
 
-	if((charToShow == 4) && (!isCogUnlocked)){
+	if((charToShow == 4) && (!isCogUnlocked) && (VersionController.paidVersion == false)){
 		Debug.Log("p2 has selected cog");
 		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 		//--show unlock button 
