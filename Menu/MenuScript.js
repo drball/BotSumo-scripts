@@ -1,6 +1,26 @@
 ﻿#pragma strict
 
 public var LoadingPanel : GameObject;
+public var LogoFree : GameObject; 
+public var LogoPaid : GameObject; 
+
+private var VersionController : VersionController;
+
+function Awake(){
+	VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
+
+	if(VersionController.paidVersion == true){
+		LogoFree.SetActive(false);
+		LogoPaid.SetActive(true);
+	} else {
+		LogoFree.SetActive(true);
+		LogoPaid.SetActive(false);
+	}
+}
+
+function Start(){
+	LoadingPanel.SetActive(false);
+}
 
 // public var AnalyticsController : AnalyticsController;
 // public var AnalyticsController2 : Analytics;
@@ -16,7 +36,7 @@ function StartGame() {
 	// AnalyticsController2 = GetComponent.<Analytics>();
 	// AnalyticsController2.hello();
 	
-	Application.LoadLevel ("playerSelect");
+	Application.LoadLevel ("levelSelect");
 }
 
 function FacebookBtnPressed() {
@@ -24,7 +44,12 @@ function FacebookBtnPressed() {
 }
 
 function RateBtnPressed() {
-	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+	if(VersionController.paidVersion == true){
+		Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+	}else {
+		Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+	}
+	
 }
 
 function TwitterBtnPressed() {
