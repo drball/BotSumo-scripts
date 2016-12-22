@@ -40,12 +40,12 @@ function StartGame() {
 }
 
 function FacebookBtnPressed() {
-	Application.OpenURL("https://www.facebook.com/drball");
+	Application.OpenURL("https://www.facebook.com/davidonionball");
 }
 
 function RateBtnPressed() {
 	if(VersionController.paidVersion == true){
-		Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+		Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.BotSumoBattleArena");
 	}else {
 		Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
 	}
