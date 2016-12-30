@@ -4,16 +4,15 @@ using System.Collections;
 
 public class FallingPlatformController : MonoBehaviour {
 
-	private int maxNum = 246;
+	private int maxNum = 183;
 	private GameObject CurrentPlatform;
-	private Renderer rend;
-	public Color highlightColor;
-	private Color initialColor;
 
 	// Use this for initialization
 	void Start () {
 
-		InvokeRepeating("SelectFallingPlatform", 1, 1.5f);
+		InvokeRepeating("SelectFallingPlatform", 1, 0.5f);
+
+		Invoke("ResetPlatform", 3);
 	}
 	
 	void SelectFallingPlatform(){
@@ -26,18 +25,27 @@ public class FallingPlatformController : MonoBehaviour {
 
 		if(CurrentPlatform != null){
 
-			Debug.Log("remove "+platformName);
-			rend = CurrentPlatform.GetComponent<Renderer>();
-			initialColor = rend.material.color;
-			// FallingPlatform platformScript = ;
-
-			GetComponent<FallingPlatform>().falling = true;
-
-			// CurrentPlatform.GetComponent<Rigidbody>().isKinematic = false;
+			//--make the platform fall
+			CurrentPlatform.GetComponent<Rigidbody>().isKinematic = false;
+			CurrentPlatform.GetComponent<Collider>().enabled = false;
 
 		}
 
 		
+	}
+
+	void ResetPlatform (){
+
+		for(int i = 0; i < maxNum; i++){
+			var platformName = "FallingPlatform ("+i.ToString()+")";
+			var APlatform = transform.Find(platformName).gameObject;
+			APlatform.transform.localPosition = new Vector3(
+				APlatform.transform.localPosition.x,
+				0,
+				APlatform.transform.localPosition.z);
+			APlatform.GetComponent<Rigidbody>().isKinematic = true;
+			APlatform.GetComponent<Collider>().enabled = true;
+		}
 	}
 
 	
