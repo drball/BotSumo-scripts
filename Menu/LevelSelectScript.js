@@ -9,6 +9,19 @@ function Start () {
 	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
 	VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
 	HideUnlockModal();
+
+	// GameObject.Find("LockedPanel").SetActive(false);
+
+	//--hide the padlock only if this is paid version
+	if(VersionController.paidVersion == true)
+	{
+		for(var obj : GameObject in GameObject.FindGameObjectsWithTag("PaidOnly"))
+		{
+		    Debug.Log("hidee "+obj.name);
+		    obj.SetActive(false);
+		}
+	}
+	
 }
 
 function LoadMainLevel(){
@@ -24,6 +37,18 @@ function LoadPitLevel(){
 
 	if(VersionController.paidVersion == true){
 		LevelsController.SelectLevel("pit");
+	} else {
+		ShowUnlockModal();
+	}
+
+}
+
+function LoadUnstableLevel(){
+
+	Debug.Log("load unstable level");
+
+	if(VersionController.paidVersion == true){
+		LevelsController.SelectLevel("unstable");
 	} else {
 		ShowUnlockModal();
 	}
