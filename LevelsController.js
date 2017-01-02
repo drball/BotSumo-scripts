@@ -3,6 +3,7 @@
 
 public var currentLevel : String;
 public var LoadingDialog : GameObject; 
+public var singlePlayer : boolean;
 
 function Awake () {
 
@@ -37,7 +38,7 @@ function LoadSelectedLevel(){
 	//--load the level we selected earlier
 	//--called from the playerSelect screen
 	ShowLoadingDialog();
-	
+
 	yield WaitForSeconds(0.25);
 
 	Debug.Log("levelscontroller is loading level "+currentLevel);

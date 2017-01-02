@@ -16,6 +16,7 @@ public var UnlockP1CogBtn : GameObject;
 public var UnlockP2CogBtn : GameObject;
 public var UnlockModal : GameObject;
 
+
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
 private var p2VisibleChar = 0;
@@ -26,6 +27,8 @@ private var VersionController : VersionController;
 //--the selected character - these used in the next scene
 static var p1SelectedCharString; 
 static var p2SelectedCharString;
+
+
 
 function Start () {
 	
@@ -205,4 +208,9 @@ function unlockCog(){
 	UnlockP2CogBtn.SetActive(false);
 	P1Btn.GetComponent.<Button>().interactable = true;
 	P2Btn.GetComponent.<Button>().interactable = true;
+}
+
+function ToggleSinglePlayer(singlePlayerSelection : boolean){
+	// Debug.Log("----------Toggle is "+singlePlayerSelection);
+	LevelsController.singlePlayer = singlePlayerSelection;
 }
