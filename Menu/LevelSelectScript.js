@@ -2,6 +2,8 @@
 
 public var LevelsController : LevelsController;
 public var unlockModal : GameObject; 
+public var levelSelectedToUnlock : String; 
+public var levelButtons : GameObject[];
 
 private var VersionController : VersionController;
 
@@ -10,52 +12,48 @@ function Start () {
 	VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
 	HideUnlockModal();
 
-	// GameObject.Find("LockedPanel").SetActive(false);
-
-	//--hide the padlock only if this is paid version
-	if(VersionController.paidVersion == true)
-	{
-		for(var obj : GameObject in GameObject.FindGameObjectsWithTag("PaidOnly"))
-		{
-		    Debug.Log("hidee "+obj.name);
-		    obj.SetActive(false);
-		}
-	}
+	CheckIfLevelsUnlocked();
 	
+}
+
+function CheckIfLevelsUnlocked(){
+	for(var obj in levelButtons) {
+		// Debug.Log("check "+obj.name);
+		obj.SendMessage("CheckIfLocked");
+	}
 }
 
 function LoadMainLevel(){
 	// Application.LoadLevel ("main");
 	// LevelsController.currentLevel = "main";
 	LevelsController.SelectLevel("main");
-
 }
 
-function LoadPitLevel(){
+// function LoadPitLevel(){
 
-	Debug.Log("load pit level");
+// 	Debug.Log("load pit level");
 
-	if(VersionController.paidVersion == true){
-		LevelsController.SelectLevel("pit");
-	} else {
-		ShowUnlockModal();
-	}
+// 	if(VersionController.paidVersion == true){
+// 		LevelsController.SelectLevel("pit");
+// 	} else {
+// 		ShowUnlockModal();
+// 	}
+// }
 
-}
+// function LoadUnstableLevel(){
 
-function LoadUnstableLevel(){
+// 	Debug.Log("load unstable level");
 
-	Debug.Log("load unstable level");
+// 	if(VersionController.paidVersion == true){
+// 		LevelsController.SelectLevel("unstable");
+// 	} else {
+// 		ShowUnlockModal();
+// 	}
+// }
 
-	if(VersionController.paidVersion == true){
-		LevelsController.SelectLevel("unstable");
-	} else {
-		ShowUnlockModal();
-	}
-
-}
-
-function ShowUnlockModal(){
+function ShowUnlockModal(levelName : String){
+	Debug.Log("loading modal for "+levelName);
+	levelSelectedToUnlock = levelName;
 	unlockModal.SetActive(true);
 }
 
@@ -65,4 +63,20 @@ function HideUnlockModal(){
 
 function DownloadPaidVersionBtn (){
 	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.BotSumoBattleArena");
+}
+
+function UnlockLevelBtn (){
+	//--unlock button action
+	Debug.Log("user chose to unlock level "+levelSelectedToUnlock);
+
+	SendMessage("StartRewardedAd");
+	HideUnlockModal();
+}
+
+function UnlockCurrentLevel(){
+	Debug.Log("unlock level "+levelSelectedToUnlock);
+
+	PlayerPrefs.SetInt(levelSelectedToUnlock+"Unlocked",1);
+
+	CheckIfLevelsUnlocked();
 }

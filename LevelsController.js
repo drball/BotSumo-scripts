@@ -32,8 +32,6 @@ function SelectLevel(destinationTitle : String){
 	Application.LoadLevel("playerSelect");
 }
 
-
-
 function LoadSelectedLevel(){
 	//--load the level we selected earlier
 	//--called from the playerSelect screen
@@ -55,3 +53,5 @@ function HideLoadingDialog(){
 	Debug.Log("hide loading");
 	LoadingDialog.SetActive(false);
 }
+
+

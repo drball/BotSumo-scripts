@@ -2,27 +2,27 @@
 using System.Collections;
 using UnityEngine.Advertisements;
 
-public class RewardedAd : MonoBehaviour
+public class RewardedAdUnlockLevel : MonoBehaviour
 {
     public string zoneId;
-    // public int rewardQty = 250;
+    private string resultFunction = "UnlockCurrentLevel"; //--the function to call at the end
 
 
-    void FixedUpdate()
-    {
-		if(Input.GetKey("space") ) {
-		// 	if(Advertisement.isInitialized && Advertisement.IsReady()) {
-		// 		Advertisement.Show();
-		// 	}
+  //   void FixedUpdate()
+  //   {
+		// if(Input.GetKey("space") ) {
+		// // 	if(Advertisement.isInitialized && Advertisement.IsReady()) {
+		// // 		Advertisement.Show();
+		// // 	}
 
-			StartRewardedAd();
-		}
+		// 	StartRewardedAd();
+		// }
 		
-    }
+  //   }
 
     public void StartRewardedAd()
     {
-    	Debug.Log("start rewarded ad");
+    	Debug.Log("start rewarded ad ");
 
     	if (string.IsNullOrEmpty (zoneId)) zoneId = null;
 
@@ -40,7 +40,7 @@ public class RewardedAd : MonoBehaviour
         {
         case ShowResult.Finished:
             Debug.Log ("Video completed. User rewarded ");
-            SendMessage("unlockCog");
+            SendMessage(resultFunction);
             break;
         case ShowResult.Skipped:
             Debug.LogWarning ("Video was skipped.");
