@@ -30,9 +30,7 @@ public class Raycast : MonoBehaviour {
         {
             //print("There is something in front of the object!");
             //Debug.Log(other.transform.gameObject.name);
-           
 
-  
             if (other.transform.name == "Cube (1)")
             {
                 this.transform.Translate(Vector3.Lerp(this.transform.position, Vector3.forward, t) * moveSpeed);
@@ -44,8 +42,6 @@ public class Raycast : MonoBehaviour {
                 {
                     rotateL = true;
                 }
-
-
 
                 //moveForward = true;
 
