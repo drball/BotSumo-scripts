@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class _RotateCustom : MonoBehaviour {
-
+    // Here some variable we'll use
     public float speed = 1.8f;
     public float moveSpeed = 1;
     public float t = 1;
@@ -16,6 +16,7 @@ public class _RotateCustom : MonoBehaviour {
 
     void Update()
     {
+        // Check constantly if the bot is not standing up correctly
         if (this.transform.rotation.x >= 0.4 || this.transform.rotation.z >= 0.4)
         {
             stopAll = true;
@@ -29,17 +30,18 @@ public class _RotateCustom : MonoBehaviour {
         {
             stopAll = false;
         }
-        Debug.Log(this.transform.rotation.x);
+        //Debug.Log(this.transform.rotation.x);
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-
+        // If bot is not stopped
         if (!stopAll)
         {
+            // if the moveforward variable in SeekPlayer script attached to the bot raycaster is true...
             if (SeekPlayer.moveForward)
             {
-
+                // ... we want to move forwad learping to smooth the movement
                 this.transform.Translate(Vector3.Lerp(this.transform.position, Vector3.forward, t) * moveSpeed);
                 if (rotateL)
                 {
@@ -51,15 +53,13 @@ public class _RotateCustom : MonoBehaviour {
                 }
             }
             else
-            {
+            { // else we want the bot to rotate on its vertical axis, and we wantto alternate it clockwise/ anticlockwise rotation
                 if (rotateL)
                 {
-                    Debug.Log("+");
                     this.transform.Rotate(-Vector3.up * speed);
                 }
                 else if (!rotateL)
                 {
-                    Debug.Log("-");
                     this.transform.Rotate(Vector3.up * speed);
                 }
             }
