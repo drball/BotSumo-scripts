@@ -49,11 +49,10 @@ function Move(localmoving : boolean) {
 		rotationSpeed = -rotationSpeed;
 	}
 	
-	if(!PlayerController.hasMoved && PlayerController.Btn){
+	if(!PlayerController.hasMoved){
 		PlayerController.hasMoved = true;
-		
-		//--fade the instruction out for this player's control btn
-		PlayerController.Btn.GetComponent.<Animator>().Play("FadeOut");
+
+		PlayerController.HideInstruction();
 	}
 
 }

@@ -4,12 +4,10 @@ using System.Collections;
 public class SeekPlayer : MonoBehaviour {
     // Some variables 
     RaycastHit other;
-    public float speed = 1.8f, moveSpeed = 0.01f;
     public float tickness = 1.0f;
     public static bool moveForward = false;
     bool rotateL = true;
     bool search = true;
-    public float t = 1;
     public Vector3 target;
     GameObject enemy;
     
@@ -40,7 +38,7 @@ public class SeekPlayer : MonoBehaviour {
                 if (other.transform.tag == "Player")
                 {
 
-                    Debug.Log("Move");
+                    Debug.Log("Move cpu player");
                     moveForward = true;
 
                 }
@@ -53,7 +51,7 @@ public class SeekPlayer : MonoBehaviour {
         }
         else
         {
-            Debug.Log("No");
+//            Debug.Log("Not looking at player");
             moveForward = false;
         }
 

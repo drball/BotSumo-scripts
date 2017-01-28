@@ -46,10 +46,13 @@ function Start () {
 	}
 
 	//--if the game is single player, disable the normal player movement script
-	//--and activate the cpu player script instead
+	//--and activate the object containing single player scripts
 	if(SinglePlayer) {
 		Player2.GetComponent.<PlayerMovement>().enabled = false;
-		Player2.GetComponent.<CpuPlayerMovement>().enabled = true;
+		Player2.gameObject.Find("PlayerSeeker").SetActive(true);
+		LInstruction.SetActive(false);
+	}else {
+		Player2.gameObject.Find("PlayerSeeker").SetActive(false);
 	}
 
 	//--get the advert script
@@ -111,7 +114,6 @@ function Reset(){
 	//--reset position
 	Player1.Respot();
 	Player2.Respot();
-	
 
 	//--reset their local variables
 	Player1.alive = true;

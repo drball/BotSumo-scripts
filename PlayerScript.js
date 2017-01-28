@@ -16,7 +16,7 @@ private var fallingYPos : float = -2;
 private var badRotationTimer : int;
 private var startingPos : Vector3;
 private var startingRotation : Quaternion;
-static var Btn : GameObject; //--the button for this player (used for hiding the instruction)
+private var Btn : GameObject; //--the button for this player (used for hiding the instruction)
 
 
 function Start () {
@@ -106,5 +106,12 @@ function Timer(){
 	
 	//Debug.Log("rotTimer = "+badRotationTimer);
 	
+}
+
+function HideInstruction(){
+	Debug.Log("hide btn for"+ Btn.name);
+
+	//--fade the instruction out for this player's control btn
+	Btn.GetComponent.<Animator>().Play("FadeOut");
 }
 
