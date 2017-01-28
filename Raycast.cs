@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Raycast : MonoBehaviour {
@@ -26,15 +26,11 @@ public class Raycast : MonoBehaviour {
 
         Debug.Log(rotateL);
 
-        Debug.DrawLine(transform.position, fwd, Color.red);
-
         if (Physics.Raycast(transform.position, fwd, out other))
         {
             //print("There is something in front of the object!");
             //Debug.Log(other.transform.gameObject.name);
-           
 
-  
             if (other.transform.name == "Cube (1)")
             {
                 this.transform.Translate(Vector3.Lerp(this.transform.position, Vector3.forward, t) * moveSpeed);
@@ -46,8 +42,6 @@ public class Raycast : MonoBehaviour {
                 {
                     rotateL = true;
                 }
-
-
 
                 //moveForward = true;
 
