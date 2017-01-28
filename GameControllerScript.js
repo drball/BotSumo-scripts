@@ -18,7 +18,7 @@ public var RInstruction : GameObject;
 private var winningScore : int = 5;
 private var defaultPlayer : String = "C"; //A B C Cog, SpinningArms
 private var AdvertController : AdvertController;
-private var LevelsController : LevelsController;
+private var LevelsController : LevelsController; 
 
 function Start () {
 	//--hide the score modal so we can show it later
@@ -118,7 +118,10 @@ function Reset(){
 	Player2.alive = true;
 	
 	roundActive = true;
-	
+
+	//--send message to all scripts, including level-specific ones (like UnstablePlatform level)
+	gameObject.SendMessage("ResetLevel",0);
+
 	yield WaitForSeconds(1);
 	
 	//--make sure these are hidden so we can activate them later

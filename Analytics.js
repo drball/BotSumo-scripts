@@ -1,4 +1,4 @@
-﻿#pragma strict
+﻿//#pragma strict
 // import UnityEngine;
 // import UnityEngine.Analytics;
 

@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+//-- for the bit of the pit that drops down
+
 private var rend: Renderer;
 var highlightColor : Color;
 private var initialColor : Color;
@@ -29,7 +31,7 @@ function Update(){
 function DropPit(){
 
 	Debug.Log("start blinking");
-	//--make player blink for a bit
+	//--make pit blink for a bit
 	var blinkingAmt : int = 0;
 	
 	while(blinkingAmt < 10) {
@@ -54,8 +56,6 @@ function DropPit(){
     ascending = false;
 
     Invoke("StartAscending", 12);
-    
-
 }
 
 function StartAscending(){
@@ -65,7 +65,6 @@ function StartAscending(){
 	ResetPit();
 
 	ascending = true;
-	
 	
 	Invoke("ResetPit", 6);
 }
