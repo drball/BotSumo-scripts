@@ -11,8 +11,7 @@ public var Player1ScoreText : GameObject;
 public var Player2ScoreText : GameObject;
 public var PlayAgainBtn : GameObject;
 public var SinglePlayer : boolean = false;
-
-public var LInstruction : GameObject;
+public var RBtn : GameObject; //--used for removing this when in single player mode
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
@@ -45,12 +44,16 @@ function Start () {
 		Player2.playerCharacter = defaultPlayer;
 	}
 
+	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
+
 	//--if the game is single player, disable the normal player movement script
 	//--and activate the object containing single player scripts
-	if(SinglePlayer) {
+	if(LevelsController.singlePlayer) {
 		Player2.GetComponent.<PlayerMovement>().enabled = false;
 		Player2.gameObject.Find("PlayerSeeker").SetActive(true);
-		LInstruction.SetActive(false);
+		RBtn.SetActive(false);
+		RInstruction.SetActive(false);
+
 	}else {
 		Player2.gameObject.Find("PlayerSeeker").SetActive(false);
 	}
@@ -58,7 +61,7 @@ function Start () {
 	//--get the advert script
 	AdvertController = GetComponent.<AdvertController>();
 
-	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
+
 	
 }
 
