@@ -58,6 +58,9 @@ function Start () {
 		Player2.gameObject.Find("PlayerSeeker").SetActive(false);
 	}
 
+	Debug.Log("start the level");
+	gameObject.SendMessage("StartLevel",0);
+
 	//--get the advert script
 	AdvertController = GetComponent.<AdvertController>();
 
