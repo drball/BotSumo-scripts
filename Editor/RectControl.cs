@@ -1,9 +1,9 @@
 ﻿// //--makes anchors of UI elements snap to edges when resized
-
+//
 // using UnityEngine;
 // using System.Collections;
 // using UnityEditor;
- 
+//
 //  [InitializeOnLoad]
 //  public class AnchorToolsEditor : EditorWindow
 //  {
@@ -11,7 +11,7 @@
 //      {
 //          SceneView.onSceneGUIDelegate += OnScene;
 //      }
- 
+//
 //      private static void OnScene(SceneView sceneview)
 //      {
 //          if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
@@ -19,12 +19,12 @@
 //              UpdateAnchors();
 //          }
 //      }
- 
+//
 //      public void OnDestroy()
 //      {
 //          SceneView.onSceneGUIDelegate -= OnScene;
 //      }
- 
+//
 //      static public Rect anchorRect;
 //      static public Vector2 anchorVector;
 //      static private Rect anchorRectOld;
@@ -34,7 +34,7 @@
 //      static private Vector2 pivotOld;
 //      static private Vector2 offsetMinOld;
 //      static private Vector2 offsetMaxOld;
- 
+//
 //      static public void UpdateAnchors()
 //      {
 //          TryToGetRectTransform();
@@ -44,7 +44,7 @@
 //              Stick();
 //          }
 //      }
- 
+//
 //      static private bool ShouldStick()
 //      {
 //          return (
@@ -55,29 +55,29 @@
 //              anchorRect != anchorRectOld
 //              );
 //      }
- 
+//
 //      static private void Stick()
 //      {
 //          CalculateCurrentWH();
 //          CalculateCurrentXY();
- 
+//
 //          CalculateCurrentXY();
 //          pivotOld = currentRectTransform.pivot;
 //          anchorVectorOld = anchorVector;
- 
+//
 //          AnchorsToCorners();
 //          anchorRectOld = anchorRect;
- 
+//
 //          UnityEditor.EditorUtility.SetDirty(currentRectTransform.gameObject);
 //      }
- 
+//
 //      static private void TryToGetRectTransform()
 //      {
 //          currentRectTransform = UnityEditor.Selection.activeGameObject.GetComponent<RectTransform>();
 //          parentRectTransform = currentRectTransform.parent.gameObject.GetComponent<RectTransform>();
- 
+//
 //      }
- 
+//
 //      static private void CalculateCurrentXY()
 //      {
 //          float pivotX = anchorRect.width * currentRectTransform.pivot.x;
@@ -88,14 +88,14 @@
 //          anchorRect.y = newXY.y;
 //          anchorRectOld = anchorRect;
 //      }
- 
+//
 //      static private void CalculateCurrentWH()
 //      {
 //          anchorRect.width = currentRectTransform.rect.width;
 //          anchorRect.height = currentRectTransform.rect.height;
 //          anchorRectOld = anchorRect;
 //      }
- 
+//
 //      static private void AnchorsToCorners()
 //      {
 //          float pivotX = anchorRect.width * currentRectTransform.pivot.x;
@@ -110,7 +110,7 @@
 //                                                   currentRectTransform.anchorMax.y - (1 - anchorVector.y) + (currentRectTransform.offsetMax.y + pivotY) / parentRectTransform.rect.height * currentRectTransform.localScale.y);
 //          currentRectTransform.offsetMin = new Vector2((0 - currentRectTransform.pivot.x) * anchorRect.width * (1 - currentRectTransform.localScale.x), (0 - currentRectTransform.pivot.y) * anchorRect.height * (1 - currentRectTransform.localScale.y));
 //          currentRectTransform.offsetMax = new Vector2((1 - currentRectTransform.pivot.x) * anchorRect.width * (1 - currentRectTransform.localScale.x), (1 - currentRectTransform.pivot.y) * anchorRect.height * (1 - currentRectTransform.localScale.y));
- 
+//
 //          offsetMinOld = currentRectTransform.offsetMin;
 //          offsetMaxOld = currentRectTransform.offsetMax;
 //      }

@@ -70,6 +70,14 @@ function Countdown(){
 	}
 }
 
+function FixedUpdate () {
+
+	//--debug
+	if(Input.GetKey("a") ) {
+		ActivateAbility();
+	}
+}
+
 
 
 function ActivateAbility () {

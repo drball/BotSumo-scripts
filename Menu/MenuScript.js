@@ -59,5 +59,17 @@ function TwitterBtnPressed() {
 
 function LikeBtnPressed() {
 	Application.OpenURL("https://www.facebook.com/BotSumoGame/");
-	
+
+}
+
+function BattleArenaBtnPressed() {
+	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.BotSumoBattleArena");
+}
+
+function BotSumoBtnPressed() {
+	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+}
+
+function ETSBtnPressed() {
+	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.EscapeTheSector");
 }
