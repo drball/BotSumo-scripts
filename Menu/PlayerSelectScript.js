@@ -3,7 +3,7 @@
 //static var playerSelection : Hashtable; //--chosen characters
 
 //--create array of the possible different player characters 
-public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog");
+public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog", "Solar");
 
 public var p1GameObjects : GameObject[]; //--array of characters
 public var p2GameObjects : GameObject[]; //--array of characters
@@ -49,10 +49,14 @@ function Start () {
 
 	Debug.Log("cogbot unlocked = "+isCogUnlocked);
 
-	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
-
-	VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
-
+	if(GameObject.Find("LevelsController")){
+		LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>(); //--loading in menu. Persistant
+	}
+	
+	if(GameObject.Find("VersionController")){
+		VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
+	}
+	
 	closeUnlockModal();
 }
 
@@ -105,6 +109,10 @@ function showOnlyP1Character (charToShow : int) {
 	} else {
 		UnlockP1CogBtn.SetActive(false);
 	}
+
+	if(charToShow == 5){
+		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+	}
 }
 
 function showOnlyP2Character (charToShow : int) {
@@ -127,6 +135,10 @@ function showOnlyP2Character (charToShow : int) {
 
 	} else {
 		UnlockP2CogBtn.SetActive(false);
+	}
+
+	if(charToShow == 5){
+		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 	}
 }
 

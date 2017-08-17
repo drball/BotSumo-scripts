@@ -22,12 +22,15 @@ private var fireRate : float = fireRateNormal;
 //--vars for cog bot
 private var cogSpeedInitial : int; //--get this from cogSpinScript
 private var cog : GameObject;
-// private var cogColliderObj : GameObject;
 private var cogCollider : Collider;
 private var cogSpinScript : SpinTransform;
 private var bounceBackScript : BounceBack;
 private var cogSpinMax : int = 950;
 private var cogSpinCollider : int = 950;
+
+//--vars for solar 
+public var movingHead : GameObject;
+public var target : GameObject;
 
 function Start () {
 	//GameController = GameObject.Find("GameController").GetComponent.<GameControllerScript>();
@@ -50,11 +53,14 @@ function Start () {
 		BulletEmitter2 = transform.Find("BulletEmitter2").gameObject;
 
 	} else if (PlayerScript.playerCharacter == "Cog"){
-			cog = transform.Find("CogWrapper").gameObject;
-			cogSpinScript = cog.GetComponent.<SpinTransform>();
-			cogSpeedInitial = cogSpinScript.spinZ;
-			bounceBackScript = GetComponent.<BounceBack>();
-			Debug.Log("cog spin value = "+cogSpeedInitial);
+		cog = transform.Find("CogWrapper").gameObject;
+		cogSpinScript = cog.GetComponent.<SpinTransform>();
+		cogSpeedInitial = cogSpinScript.spinZ;
+		bounceBackScript = GetComponent.<BounceBack>();
+		Debug.Log("cog spin value = "+cogSpeedInitial);
+
+	} else {
+
 	}
 	
 }
@@ -78,7 +84,34 @@ function FixedUpdate () {
 	}
 }
 
+function Update(){
 
+	var relativePos = target.transform.position - movingHead.transform.position;
+	var rotation = Quaternion.LookRotation(relativePos);
+	rotation.x = rotation.x + 90;
+	rotation.y = 0;
+	movingHead.transform.rotation = rotation;
+	// movingHead.transform.LookAt(target.transform);
+
+	if(PlayerScript.playerCharacter == "Solar") {
+
+		if(target){
+			
+			// var targetDir : Vector3 = target.transform.position - transform.position;
+	  //       var step : float = 2f * Time.deltaTime;
+	  //       var newDir : Vector3 = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+	  //       Debug.DrawRay(movingHead.transform.position, newDir, Color.red);
+	        // Debug.Log("look at target "+movingHead.transform.rotation);
+	        // movingHead.transform.rotation = Quaternion.LookRotation(Vector3(newDir.x,0,0));
+
+	        // var relativePos = target.transform.position - movingHead.transform.position;
+	        // var rotation = Quaternion.LookRotation(relativePos);
+	        // movingHead.transform.rotation = rotation;
+
+		}
+
+	}
+}
 
 function ActivateAbility () {
 
@@ -102,6 +135,21 @@ function ActivateAbility () {
 		}
 		Debug.Log("new cogspeed is "+cogSpinScript.spinZ);
 		bounceBackScript.ChangeForceAmt(cogSpinScript.spinZ);
+
+	}else if(PlayerScript.playerCharacter == "Solar") {
+
+		//--find the enemy target, so we know who to shoot at
+		var targets : GameObject[] = GameObject.FindGameObjectsWithTag("Player");
+
+		for(var i : int = 0; i < 2; i++)
+        {
+            Debug.Log("loop. "+targets[i]);
+            Debug.Log("this is . "+transform.gameObject);
+            if(targets[i] != transform.gameObject){
+            	target = targets[i];
+				break;
+            }
+        }
 
 	}else {
 		//--default ability - make player bigger 
