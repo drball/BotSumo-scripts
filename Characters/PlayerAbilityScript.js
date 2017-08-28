@@ -31,6 +31,7 @@ private var cogSpinCollider : int = 950;
 //--vars for solar 
 public var movingHead : GameObject;
 public var target : GameObject;
+private var targets : GameObject[];
 
 function Start () {
 	//GameController = GameObject.Find("GameController").GetComponent.<GameControllerScript>();
@@ -59,10 +60,27 @@ function Start () {
 		bounceBackScript = GetComponent.<BounceBack>();
 		Debug.Log("cog spin value = "+cogSpeedInitial);
 
+	} else if (PlayerScript.playerCharacter == "Solar"){
+		Invoke("FindOpponent", 1);
 	} else {
 
 	}
 	
+}
+
+function FindOpponent (){
+	//--find the enemy target, so we know who Solar should shoot at
+	targets = GameObject.FindGameObjectsWithTag("Player");
+
+	for(var i : int = 0; i < targets.length; i++)
+    {
+        // Debug.Log("loop. "+targets[i]);
+        // Debug.Log("found . "+transform.gameObject);
+        if(targets[i] != transform.gameObject){
+        	target = targets[i];
+			break;
+        }
+    }
 }
 
 function Countdown(){
@@ -86,30 +104,20 @@ function FixedUpdate () {
 
 function Update(){
 
-	var relativePos = target.transform.position - movingHead.transform.position;
-	var rotation = Quaternion.LookRotation(relativePos);
-	rotation.x = rotation.x + 90;
-	rotation.y = 0;
-	movingHead.transform.rotation = rotation;
-	// movingHead.transform.LookAt(target.transform);
-
 	if(PlayerScript.playerCharacter == "Solar") {
 
 		if(target){
-			
-			// var targetDir : Vector3 = target.transform.position - transform.position;
-	  //       var step : float = 2f * Time.deltaTime;
-	  //       var newDir : Vector3 = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
-	  //       Debug.DrawRay(movingHead.transform.position, newDir, Color.red);
-	        // Debug.Log("look at target "+movingHead.transform.rotation);
-	        // movingHead.transform.rotation = Quaternion.LookRotation(Vector3(newDir.x,0,0));
 
-	        // var relativePos = target.transform.position - movingHead.transform.position;
-	        // var rotation = Quaternion.LookRotation(relativePos);
-	        // movingHead.transform.rotation = rotation;
+			var rotation = transform.rotation;
 
+			if(abilityActive){
+				rotation = Quaternion.LookRotation(target.transform.position - movingHead.transform.position);
+			} 
+
+ 			movingHead.transform.rotation = Quaternion.Slerp(movingHead.transform.rotation, rotation, Time.deltaTime * 8f);
+
+	        
 		}
-
 	}
 }
 
@@ -138,18 +146,7 @@ function ActivateAbility () {
 
 	}else if(PlayerScript.playerCharacter == "Solar") {
 
-		//--find the enemy target, so we know who to shoot at
-		var targets : GameObject[] = GameObject.FindGameObjectsWithTag("Player");
-
-		for(var i : int = 0; i < 2; i++)
-        {
-            Debug.Log("loop. "+targets[i]);
-            Debug.Log("this is . "+transform.gameObject);
-            if(targets[i] != transform.gameObject){
-            	target = targets[i];
-				break;
-            }
-        }
+		InvokeRepeating("FireLaser", 0, fireRate);
 
 	}else {
 		//--default ability - make player bigger 
@@ -204,6 +201,9 @@ function DisableAbility() {
 	} else if(PlayerScript.playerCharacter == "Cog"){
 		cogSpinScript.spinZ = cogSpeedInitial;
 		bounceBackScript.ResetForceAmt();
+
+	} else if(PlayerScript.playerCharacter == "Solar"){
+		CancelInvoke("FireLaser");
 
 	}else {
 		//--put player back to normal mass
@@ -269,4 +269,11 @@ function FireBullet() {
 	//--set the owner of this bullet
 	bulletInstance.GetComponent.<BulletScript>().Owner = gameObject;
 
+}
+
+function FireLaser(){
+	var bulletInstance : GameObject = Instantiate(Resources.Load("Bullet", GameObject),
+			BulletEmitter1.transform.position, 
+			movingHead.transform.rotation
+		);
 }

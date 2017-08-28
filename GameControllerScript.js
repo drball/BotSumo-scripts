@@ -15,7 +15,7 @@ public var RBtn : GameObject; //--used for removing this when in single player m
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
-private var defaultPlayer : String = "A"; //A B C Cog, SpinningArms
+private var defaultPlayer : String = "A"; //A B C Cog, SpinningArms, Solar
 private var AdvertController : AdvertController;
 private var LevelsController : LevelsController; 
 
@@ -35,7 +35,8 @@ function Start () {
 	if(PlayerSelectScript.p1SelectedCharString){
 		Player1.playerCharacter = PlayerSelectScript.p1SelectedCharString;
 	}else {
-		Player1.playerCharacter = defaultPlayer;
+		// Player1.playerCharacter = defaultPlayer;
+		Player1.playerCharacter = "Solar"; //--for temporary debug
 	}
 	
 	if(PlayerSelectScript.p2SelectedCharString){
@@ -87,7 +88,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1A";
+			playerToLoad = "Player1Solar";
 		}
 	}
 	
@@ -98,7 +99,6 @@ function LoadPlayer(dummyObjName, playerNum){
 		PlayerDummy.transform.position, 
 		PlayerDummy.transform.rotation
 	);
-	
 	
 	return playerInstance;
 }
