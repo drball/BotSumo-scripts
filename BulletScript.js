@@ -5,10 +5,7 @@ public var Vfx : GameObject;
 public var ParticleObj : GameObject;
 public var Owner : GameObject; //--discount this from any collisions
 public var forceAmount : float = 200;
-public var radius : float = 1.0;
-public var ignoreLayers : LayerMask;
-
-
+public var explosionScale : float = 1f;
 
 private var tr : Transform;
 private var rb : Rigidbody;
@@ -20,7 +17,6 @@ function Start () {
 //	rb = GetComponent.<Rigidbody>();
 	tr = transform;
 	coll = GetComponent.<Collider>();
-
  
 }
 
@@ -54,8 +50,10 @@ function OnTriggerEnter(other: Collider)
 			other.GetComponent.<Rigidbody>().AddForce(force, ForceMode.Impulse);
 			
 			Destroy(Vfx);
-			ParticleObj.GetComponent.<ParticleSystem>().emissionRate = 0;
 
+			if(ParticleObj){
+				ParticleObj.GetComponent.<ParticleSystem>().emissionRate = 0;
+			}
 		}
 		
 		//--spawn an explosion
@@ -63,6 +61,7 @@ function OnTriggerEnter(other: Collider)
 			transform.position, 
 			transform.rotation
 		);
+		explosionInstance.transform.localScale = Vector3(explosionScale,explosionScale,explosionScale);
 		
 		Destroy(explosionInstance,3);
 

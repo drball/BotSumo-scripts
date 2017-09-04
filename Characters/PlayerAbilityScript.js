@@ -62,6 +62,7 @@ function Start () {
 
 	} else if (PlayerScript.playerCharacter == "Solar"){
 		Invoke("FindOpponent", 1);
+		BulletEmitter1 = transform.Find("Solar/SolarHeadWrapper/BulletEmitter").gameObject;
 	} else {
 
 	}
@@ -111,12 +112,11 @@ function Update(){
 			var rotation = transform.rotation;
 
 			if(abilityActive){
-				rotation = Quaternion.LookRotation(target.transform.position - movingHead.transform.position);
+				rotation = Quaternion.LookRotation(Vector3(target.transform.position.x, movingHead.transform.position.y, target.transform.position.z) - movingHead.transform.position);
 			} 
 
- 			movingHead.transform.rotation = Quaternion.Slerp(movingHead.transform.rotation, rotation, Time.deltaTime * 8f);
+ 			movingHead.transform.rotation = Quaternion.Slerp(movingHead.transform.rotation, rotation, Time.deltaTime * 6f);
 
-	        
 		}
 	}
 }
@@ -146,7 +146,7 @@ function ActivateAbility () {
 
 	}else if(PlayerScript.playerCharacter == "Solar") {
 
-		InvokeRepeating("FireLaser", 0, fireRate);
+		InvokeRepeating("FireLaser", 0, fireRate / 2f);
 
 	}else {
 		//--default ability - make player bigger 
@@ -272,8 +272,12 @@ function FireBullet() {
 }
 
 function FireLaser(){
-	var bulletInstance : GameObject = Instantiate(Resources.Load("Bullet", GameObject),
+	Debug.Log("fire a laser");
+	var bulletInstance : GameObject = Instantiate(Resources.Load("Laser", GameObject),
 			BulletEmitter1.transform.position, 
 			movingHead.transform.rotation
 		);
+
+	//--set the owner of this bullet
+	bulletInstance.GetComponent.<BulletScript>().Owner = gameObject;
 }

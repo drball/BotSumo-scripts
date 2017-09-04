@@ -42,7 +42,7 @@ public class RewardedAd : MonoBehaviour
         {
         case ShowResult.Finished:
             Debug.Log ("Video completed. User rewarded ");
-            SendMessage("unlockCog");
+            SendMessage("unlockSelectedBot");
             break;
         case ShowResult.Skipped:
             Debug.LogWarning ("Video was skipped.");

@@ -12,23 +12,24 @@ public var P2Btn : GameObject;	//--ref to btn for disabling it
 public var LoadingPanel : GameObject;
 public var P1WaitMsg : GameObject;
 public var P2WaitMsg : GameObject;
-public var UnlockP1CogBtn : GameObject;
-public var UnlockP2CogBtn : GameObject;
+public var UnlockP1Btn : GameObject;
+public var UnlockP2Btn : GameObject;
 public var UnlockModal : GameObject;
-
+public var UnlockP1BtnScript : UnlockBotButton;
+public var UnlockP2BtnScript : UnlockBotButton;
 
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
 private var p2VisibleChar = 0;
-private var isCogUnlocked : int = 0;
+public var isCogUnlocked : int = 0;
+public var isSolarUnlocked : int = 0;
 private var LevelsController : LevelsController;
 private var VersionController : VersionController;
+public var UnlockingBot : String; //--used to remember which bot was unlocked while advert plays
 
 //--the selected character - these used in the next scene
 static var p1SelectedCharString; 
 static var p2SelectedCharString;
-
-
 
 function Start () {
 	
@@ -46,8 +47,9 @@ function Start () {
 
 	//--check whether cogbot has been unlocked 
 	isCogUnlocked = PlayerPrefs.GetInt("UnlockedCog");
+	isSolarUnlocked = PlayerPrefs.GetInt("UnlockedSolar");
 
-	Debug.Log("cogbot unlocked = "+isCogUnlocked);
+	Debug.Log("solar unlocked = "+isSolarUnlocked);
 
 	if(GameObject.Find("LevelsController")){
 		LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>(); //--loading in menu. Persistant
@@ -56,7 +58,7 @@ function Start () {
 	if(GameObject.Find("VersionController")){
 		VersionController = GameObject.Find("VersionController").GetComponent.<VersionController>();
 	}
-	
+
 	closeUnlockModal();
 }
 
@@ -104,13 +106,22 @@ function showOnlyP1Character (charToShow : int) {
 		Debug.Log("p1 has selected cog");
 		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 		//--show unlock button 
-		UnlockP1CogBtn.SetActive(true);
+		UnlockP1Btn.SetActive(true);
+		UnlockP1BtnScript.selectedBot = "Cog";
+
+	} else if((charToShow == 5) && (!isSolarUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p1 has selected solar");
+		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP1Btn.SetActive(true);
+		UnlockP1BtnScript.selectedBot = "Solar";
 
 	} else {
-		UnlockP1CogBtn.SetActive(false);
+		UnlockP1Btn.SetActive(false);
+
 	}
 
-	if(charToShow == 5){
+	if(charToShow == 6){
 		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 	}
 }
@@ -131,13 +142,21 @@ function showOnlyP2Character (charToShow : int) {
 		Debug.Log("p2 has selected cog");
 		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 		//--show unlock button 
-		UnlockP2CogBtn.SetActive(true);
+		UnlockP2Btn.SetActive(true);
+		UnlockP2BtnScript.selectedBot = "Cog";
+
+	} else if((charToShow == 5) && (!isSolarUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p2 has selected solar");
+		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP2Btn.SetActive(true);
+		UnlockP2BtnScript.selectedBot = "Solar";
 
 	} else {
-		UnlockP2CogBtn.SetActive(false);
+		UnlockP2Btn.SetActive(false);
 	}
 
-	if(charToShow == 5){
+	if(charToShow == 6){
 		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
 	}
 }
@@ -192,34 +211,41 @@ function PrevCharacter (playerNum : int) {
 	}
 }
 
-function showUnlockModal() {
+function showUnlockModal(selectedCharacterName : String){
 
-	// Debug.Log("unlocking char="+character);
+	//--unlock the currently selected character
+	Debug.Log("Showing modal for "+selectedCharacterName);
+	UnlockingBot = selectedCharacterName;
 	UnlockModal.SetActive(true);
 }
-
-// function unlockCharacter (character : String) {
-// 	//--unlock button has been pressed
-// 	//--character is string from the button
-
-// 	Debug.Log("unlocking char="+character);
-
-// 	// PlayerPrefs.SetInt("UnlockedCog", 1);
-// }
 
 function closeUnlockModal(){
 	UnlockModal.SetActive(false);
 }
 
-function unlockCog(){
-	//--called by a sendmessage
-	Debug.Log("unlocking cog by sendmessage");
-	PlayerPrefs.SetInt("UnlockedCog", 1);
-	isCogUnlocked = 1;
-	UnlockP1CogBtn.SetActive(false);
-	UnlockP2CogBtn.SetActive(false);
+function unlockSelectedBot(){
+	//--called by a sendmessage from RewardedAd
+	Debug.Log("unlocking "+UnlockingBot);
+	PlayerPrefs.SetInt("Unlocked"+UnlockingBot, 1);
+	// UnlockP1SolarBtn.SetActive(false);
+	// UnlockP2SolarBtn.SetActive(false);
 	P1Btn.GetComponent.<Button>().interactable = true;
 	P2Btn.GetComponent.<Button>().interactable = true;
+
+	//--set the variables
+	if(UnlockingBot == "Cog"){
+		isCogUnlocked = 1;
+	} else if (UnlockingBot == "Solar"){
+		isSolarUnlocked = 1;
+	}
+
+	if (UnlockP1BtnScript.selectedBot == UnlockingBot){
+		UnlockP1Btn.SetActive(false);
+	};
+
+	if (UnlockP2BtnScript.selectedBot == UnlockingBot){
+		UnlockP2Btn.SetActive(false);
+	};
 }
 
 function ToggleSinglePlayer(singlePlayerSelection : boolean){
