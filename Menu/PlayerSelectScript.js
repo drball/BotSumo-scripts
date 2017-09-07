@@ -3,7 +3,7 @@
 //static var playerSelection : Hashtable; //--chosen characters
 
 //--create array of the possible different player characters 
-public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog", "Solar");
+public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog", "Solar","Razorback");
 
 public var p1GameObjects : GameObject[]; //--array of characters
 public var p2GameObjects : GameObject[]; //--array of characters
@@ -18,11 +18,13 @@ public var UnlockModal : GameObject;
 public var UnlockP1BtnScript : UnlockBotButton;
 public var UnlockP2BtnScript : UnlockBotButton;
 
+public var isCogUnlocked : int = 0;
+public var isSolarUnlocked : int = 0;
+public var isRazorbackUnlocked : int = 0;
+
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
 private var p2VisibleChar = 0;
-public var isCogUnlocked : int = 0;
-public var isSolarUnlocked : int = 0;
 private var LevelsController : LevelsController;
 private var VersionController : VersionController;
 public var UnlockingBot : String; //--used to remember which bot was unlocked while advert plays
@@ -48,6 +50,7 @@ function Start () {
 	//--check whether cogbot has been unlocked 
 	isCogUnlocked = PlayerPrefs.GetInt("UnlockedCog");
 	isSolarUnlocked = PlayerPrefs.GetInt("UnlockedSolar");
+	isRazorbackUnlocked = PlayerPrefs.GetInt("UnlockedRazorback");
 
 	Debug.Log("solar unlocked = "+isSolarUnlocked);
 
@@ -116,14 +119,21 @@ function showOnlyP1Character (charToShow : int) {
 		UnlockP1Btn.SetActive(true);
 		UnlockP1BtnScript.selectedBot = "Solar";
 
+	} else if((charToShow == 6) && (!isRazorbackUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p1 has selected razorback");
+		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP1Btn.SetActive(true);
+		UnlockP1BtnScript.selectedBot = "Razorback";
+
 	} else {
 		UnlockP1Btn.SetActive(false);
 
 	}
 
-	if(charToShow == 6){
-		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
-	}
+	// if(charToShow == 6){
+	// 	P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+	// }
 }
 
 function showOnlyP2Character (charToShow : int) {
@@ -152,13 +162,20 @@ function showOnlyP2Character (charToShow : int) {
 		UnlockP2Btn.SetActive(true);
 		UnlockP2BtnScript.selectedBot = "Solar";
 
+	} else if((charToShow == 6) && (!isRazorbackUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p2 has selected razorback");
+		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP2Btn.SetActive(true);
+		UnlockP2BtnScript.selectedBot = "Razorback";
+
 	} else {
 		UnlockP2Btn.SetActive(false);
 	}
 
-	if(charToShow == 6){
-		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
-	}
+	// if(charToShow == 6){
+	// 	P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+	// }
 }
 
 function NextCharacter (playerNum : int) {

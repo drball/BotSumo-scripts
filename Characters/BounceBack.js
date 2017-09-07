@@ -1,10 +1,10 @@
 ﻿#pragma strict
 
-//--used for the cogbot, and also a shield
+//--used for the cogbot, and also a shield. Uses OnCollisionEnter to find the contact point for sparks
 
 private var forceAmtInitial : float = 110;
 private var forceAmt : float = forceAmtInitial;
-public var PlayerCharacter : GameObject; //--to get proper direction
+// public var PlayerCharacter : GameObject; //--to get proper direction
 
 function Start () {
 
@@ -20,7 +20,6 @@ function ChangeForceAmt (cogSpeed : float){
 function ResetForceAmt(){
 	// Debug.Log("reset forceamt");
 	forceAmt = forceAmtInitial;
-	
 }
 
 function FixedUpdate () {
@@ -42,7 +41,7 @@ function OnCollisionEnter (collision : Collision)
 
 	var other : GameObject = contact.otherCollider.gameObject;
 
-	// Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
+	Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
 
 	if(other.tag == "Player" || other.tag == "Box") {
 

@@ -35,8 +35,7 @@ function Start () {
 	if(PlayerSelectScript.p1SelectedCharString){
 		Player1.playerCharacter = PlayerSelectScript.p1SelectedCharString;
 	}else {
-		// Player1.playerCharacter = defaultPlayer;
-		Player1.playerCharacter = "Solar"; //--for temporary debug
+		Player1.playerCharacter = defaultPlayer;
 	}
 	
 	if(PlayerSelectScript.p2SelectedCharString){
@@ -88,7 +87,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1Solar";
+			playerToLoad = "Player1Razorback";
 		}
 	}
 	
