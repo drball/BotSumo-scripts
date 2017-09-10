@@ -254,6 +254,8 @@ function unlockSelectedBot(){
 		isCogUnlocked = 1;
 	} else if (UnlockingBot == "Solar"){
 		isSolarUnlocked = 1;
+	} else if (UnlockingBot == "Razorback"){
+		isRazorbackUnlocked = 1;
 	}
 
 	if (UnlockP1BtnScript.selectedBot == UnlockingBot){

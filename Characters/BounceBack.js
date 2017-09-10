@@ -77,7 +77,7 @@ function OnCollisionEnter (collision : Collision)
 			//--apply more force when hitting player
 			forceAmtLocal = forceAmt + 300;
 		} 
-		// Debug.Log("---cog apply force of "+forceAmtLocal+" to "+other.name+" forcemat = "+forceAmt);
+		Debug.Log("---cog apply force of "+forceAmtLocal+" to "+other.name+" forceamt = "+forceAmt);
 
 		otherRb.AddForce((directionToOther * forceAmtLocal), ForceMode.Impulse);
 		otherRb.AddTorque(transform.up * 450, ForceMode.Impulse);
