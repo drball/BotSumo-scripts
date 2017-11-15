@@ -66,8 +66,8 @@ function BattleArenaBtnPressed() {
 	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.BotSumoBattleArena");
 }
 
-function BotSumoBtnPressed() {
-	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.RoboSumo");
+function FokkerBtnPressed() {
+	Application.OpenURL("https://play.google.com/store/apps/details?id=com.DavidDickBall.ChickenFokkers");
 }
 
 function ETSBtnPressed() {
