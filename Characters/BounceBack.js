@@ -8,7 +8,7 @@ private var forceAmt : float = forceAmtInitial;
 
 function Start () {
 
-	Debug.Log("initial force = "+forceAmt);
+	// Debug.Log("initial force = "+forceAmt);
 }
 
 function ChangeForceAmt (cogSpeed : float){

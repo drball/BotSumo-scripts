@@ -24,12 +24,19 @@ public class DetachableObject : MonoBehaviour {
 			float collisionMagnitude = otherRb.velocity.magnitude + rb.velocity.magnitude;
 
 			if(collisionMagnitude > 0.2f){
-				Debug.Log("pop off");
-				gameObject.SetActive(false);
-
-				//--spawn new - in same pos as this 
+				Debug.Log("collision was enough to detach");
+				Detach();
 			}
 		}
-        
     }
+
+    void Detach(){
+    	Debug.Log("pop off");
+		gameObject.SetActive(false);
+
+		//--spawn new - in same pos as this 
+		GameObject newObj = Instantiate(detachedVersion, transform.position, transform.rotation);
+		newObj.transform.localScale = transform.lossyScale;
+    }
+
 }
