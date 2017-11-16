@@ -23,8 +23,8 @@ public class DetachableObject : MonoBehaviour {
 
 			float collisionMagnitude = otherRb.velocity.magnitude + rb.velocity.magnitude;
 
-			if(collisionMagnitude > 0.2f){
-				Debug.Log("collision was enough to detach");
+			if(collisionMagnitude > 0.8f){
+				Debug.Log("collision "+collisionMagnitude+" was enough to detach");
 				Detach();
 			}
 		}
