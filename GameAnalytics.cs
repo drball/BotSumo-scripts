@@ -6,11 +6,15 @@ using System.Collections.Generic;
 public class GameAnalytics : MonoBehaviour {
 
     public int timesPlayed;
+
+    void Start(){
+        timesPlayed = PlayerPrefs.GetInt("timesPlayed");
+    }
 	
 	void StartLevel() {
 	    //--called by game controller when the level is reset
 
-	    timesPlayed = PlayerPrefs.GetInt("timesPlayed");
+        timesPlayed = PlayerPrefs.GetInt("timesPlayed");
 
 	    PlayerPrefs.SetInt("timesPlayed", timesPlayed+=1);
 
