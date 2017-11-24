@@ -2,13 +2,14 @@
 
 //--used for the cogbot, and also a shield. Uses OnCollisionEnter to find the contact point for sparks
 
-private var forceAmtInitial : float = 110;
-private var forceAmt : float = forceAmtInitial;
+public var forceAmtInitial : float = 110; //force - before modifications
+private var forceAmt : float;
 // public var PlayerCharacter : GameObject; //--to get proper direction
 
 function Start () {
 
 	// Debug.Log("initial force = "+forceAmt);
+	forceAmt = forceAmtInitial;
 }
 
 function ChangeForceAmt (cogSpeed : float){
