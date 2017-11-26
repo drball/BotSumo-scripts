@@ -3,7 +3,7 @@
 //static var playerSelection : Hashtable; //--chosen characters
 
 //--create array of the possible different player characters 
-public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog", "Solar","Razorback");
+public var playerCharacters = new Array ("A", "B", "C", "SpinningArms", "Cog", "Solar","Razorback", "Pooper", "Flat");
 
 public var p1GameObjects : GameObject[]; //--array of characters
 public var p2GameObjects : GameObject[]; //--array of characters
@@ -21,6 +21,8 @@ public var UnlockP2BtnScript : UnlockBotButton;
 public var isCogUnlocked : int = 0;
 public var isSolarUnlocked : int = 0;
 public var isRazorbackUnlocked : int = 0;
+public var isPooperUnlocked : int = 0;
+public var isFlatUnlocked : int = 0;
 
 private var numPlayers : int = 2;
 private var p1VisibleChar = 0;
@@ -51,8 +53,10 @@ function Start () {
 	isCogUnlocked = PlayerPrefs.GetInt("UnlockedCog");
 	isSolarUnlocked = PlayerPrefs.GetInt("UnlockedSolar");
 	isRazorbackUnlocked = PlayerPrefs.GetInt("UnlockedRazorback");
+	isPooperUnlocked = PlayerPrefs.GetInt("UnlockedPooper");
+	isFlatUnlocked = PlayerPrefs.GetInt("UnlockedFlat");
 
-	Debug.Log("solar unlocked = "+isSolarUnlocked);
+	// Debug.Log("solar unlocked = "+isSolarUnlocked);
 
 	if(GameObject.Find("LevelsController")){
 		LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>(); //--loading in menu. Persistant
@@ -99,6 +103,7 @@ function showOnlyP1Character (charToShow : int) {
 
 	//--hide all characters
 	for(var i : int = 0; i < p1GameObjects.length; i++){
+		// Debug.Log("p1 setting "+i+" to inactive");
 		p1GameObjects[i].SetActive(false);
 	}
 	
@@ -126,6 +131,20 @@ function showOnlyP1Character (charToShow : int) {
 		UnlockP1Btn.SetActive(true);
 		UnlockP1BtnScript.selectedBot = "Razorback";
 
+	} else if((charToShow == 7) && (!isPooperUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p1 has selected pooper");
+		P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP1Btn.SetActive(true);
+		UnlockP1BtnScript.selectedBot = "Pooper";
+
+	// } else if((charToShow == 8) && (!isFlatUnlocked) && (VersionController.paidVersion == false)){
+	// 	Debug.Log("p1 has selected pooper");
+	// 	P1Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+	// 	//--show unlock button 
+	// 	UnlockP1Btn.SetActive(true);
+	// 	UnlockP1BtnScript.selectedBot = "Flat";
+
 	} else {
 		UnlockP1Btn.SetActive(false);
 
@@ -142,6 +161,7 @@ function showOnlyP2Character (charToShow : int) {
 
 	//--hide all characters
 	for(var i : int = 0; i < p2GameObjects.length; i++){
+		// Debug.Log("p2 setting "+i+" to inactive");
 		p2GameObjects[i].SetActive(false);
 	}
 	
@@ -168,6 +188,20 @@ function showOnlyP2Character (charToShow : int) {
 		//--show unlock button 
 		UnlockP2Btn.SetActive(true);
 		UnlockP2BtnScript.selectedBot = "Razorback";
+
+	} else if((charToShow == 7) && (!isPooperUnlocked) && (VersionController.paidVersion == false)){
+		Debug.Log("p2 has selected pooper");
+		P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+		//--show unlock button 
+		UnlockP2Btn.SetActive(true);
+		UnlockP2BtnScript.selectedBot = "Pooper";
+
+	// } else if((charToShow == 8) && (!isFlatUnlocked) && (VersionController.paidVersion == false)){
+	// 	Debug.Log("p2 has selected flat");
+	// 	P2Btn.GetComponent.<Button>().interactable = false; //--this bots btn should be disabled
+	// 	//--show unlock button 
+	// 	UnlockP2Btn.SetActive(true);
+	// 	UnlockP2BtnScript.selectedBot = "Flat";
 
 	} else {
 		UnlockP2Btn.SetActive(false);
@@ -255,6 +289,10 @@ function unlockSelectedBot(){
 	} else if (UnlockingBot == "Solar"){
 		isSolarUnlocked = 1;
 	} else if (UnlockingBot == "Razorback"){
+		isRazorbackUnlocked = 1;
+	} else if (UnlockingBot == "Pooper"){
+		isRazorbackUnlocked = 1;
+	} else if (UnlockingBot == "Flat"){
 		isRazorbackUnlocked = 1;
 	}
 

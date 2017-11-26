@@ -10,13 +10,13 @@ public class OnlyShowInDecember : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		gameObject.SetActive(false); //--temporary
+		// gameObject.SetActive(false); //--temporary
 
-		// month = System.DateTime.Now.Month.ToString();
+		month = System.DateTime.Now.Month.ToString();
 
-		// if((month != "11") && (month != "12")){
-		// 	gameObject.SetActive(false);
-		// }
+		if((month != "11") && (month != "12")){
+			gameObject.SetActive(false);
+		}
 	}
 	
 }

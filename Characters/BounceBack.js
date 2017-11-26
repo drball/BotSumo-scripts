@@ -44,7 +44,7 @@ function OnCollisionEnter (collision : Collision)
 
 	Debug.Log("a collision has happened between "+contact.thisCollider.name +" and "+other.name);
 
-	if(other.tag == "Player" || other.tag == "Box") {
+	if(other.CompareTag("Player") || other.CompareTag("Box")) {
 
 		//--create some sparks when we hit the other
 		var pos: Vector3 = contact.point;
