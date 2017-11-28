@@ -34,7 +34,6 @@ public var target : GameObject;
 private var targets : GameObject[];
 
 function Start () {
-	//GameController = GameObject.Find("GameController").GetComponent.<GameControllerScript>();
 	PlayerScript = GetComponent.<PlayerScript>();
 	
 	vfxObj = PlayerScript.vfxObj;
@@ -45,13 +44,11 @@ function Start () {
 	normalMass = Rb.mass;
 		
 	InvokeRepeating("Countdown", 0, 1);
-
-	Debug.Log("player character is "+PlayerScript.playerCharacter);
 		
 	if(PlayerScript.playerCharacter == "B")
 	{	
-		BulletEmitter1 = transform.Find("BulletEmitter1").gameObject;
-		BulletEmitter2 = transform.Find("BulletEmitter2").gameObject;
+		// BulletEmitter1 = transform.Find("BulletEmitter1").gameObject;
+		// BulletEmitter2 = transform.Find("BulletEmitter2").gameObject;
 
 	} else if (PlayerScript.playerCharacter == "Cog"){
 		cog = transform.Find("CogWrapper").gameObject;
@@ -125,6 +122,7 @@ function ActivateAbility () {
 
 	abilityActive = true;
 	Debug.Log("ability active");
+	BroadcastMessage("ActivateAbilityBroadcast");
 	
 	//--pause player for a bit - whilst flashing
 	PlayerScript.alive = false;
@@ -132,7 +130,7 @@ function ActivateAbility () {
 	//--each character has different abilities
 	if(PlayerScript.playerCharacter == "B")
 	{
-		InvokeRepeating("FireBullet", 0, fireRate);
+		// InvokeRepeating("FireBullet", 0, fireRate);
 
 	}else if(PlayerScript.playerCharacter == "Cog") {
 
@@ -194,9 +192,11 @@ function DisableAbility() {
 
 	Debug.Log("back to normal");
 
+	BroadcastMessage("DisableAbilityBroadcast");
+
 	if(PlayerScript.playerCharacter == "B")
 	{
-		CancelInvoke("FireBullet");
+		// CancelInvoke("FireBullet");
 
 	} else if(PlayerScript.playerCharacter == "Cog"){
 		cogSpinScript.spinZ = cogSpeedInitial;
@@ -241,35 +241,7 @@ function DisableAbility() {
     vfxObj.SetActive(true);
 }
 
-function FireBullet() {
 
-	fireFromL = !fireFromL;
-	
-	var Emitter : Vector3;
-	
-	if( fireFromL == true ){
-//		var bulletInstance : GameObject = Instantiate(Resources.Load("Bullet", GameObject),
-//			BulletEmitter1.transform.position, 
-//			transform.rotation
-//		);
-		Emitter = BulletEmitter1.transform.position;
-	}else {
-//		var bulletInstance : GameObject = Instantiate(Resources.Load("Bullet", GameObject),
-//			BulletEmitter2.transform.position, 
-//			transform.rotation
-//		);
-		Emitter = BulletEmitter2.transform.position;
-	}
-	
-	var bulletInstance : GameObject = Instantiate(Resources.Load("Bullet", GameObject),
-			Emitter, 
-			transform.rotation
-		);
-	
-	//--set the owner of this bullet
-	bulletInstance.GetComponent.<BulletScript>().Owner = gameObject;
-
-}
 
 function FireLaser(){
 	Debug.Log("fire a laser");

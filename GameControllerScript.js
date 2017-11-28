@@ -15,7 +15,7 @@ public var RBtn : GameObject; //--used for removing this when in single player m
 public var RInstruction : GameObject;
 
 private var winningScore : int = 5;
-private var defaultPlayer : String = "Pooper"; //A B C Cog, SpinningArms, Solar
+private var defaultPlayer : String = "B"; //A B C Cog, SpinningArms, Solar
 private var AdvertController : AdvertController;
 private var LevelsController : LevelsController; 
 
@@ -63,8 +63,6 @@ function Start () {
 
 	//--get the advert script
 	AdvertController = GetComponent.<AdvertController>(); 
-
-	
 }
 
 function LoadPlayer(dummyObjName, playerNum){
@@ -87,7 +85,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1Pooper";
+			playerToLoad = "Player1B";
 		}
 	}
 	
