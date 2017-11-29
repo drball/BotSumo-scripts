@@ -10,22 +10,63 @@ public class BulletScript : MonoBehaviour {
 	public GameObject Owner; //--discount this from any collisions
 	public float forceAmount = 200f;
 	public float explosionScale = 1f;
+	public GameObject Explosion;
 
 	private Transform tr;
-	private Rigidbody rb;
-	private Collider coll;
+	public Collider coll;
 
 	// Use this for initialization
 	void Start () {
 		Destroy(gameObject,7);
+		tr = transform;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+		tr.Translate(Vector3.forward * speed * Time.deltaTime);
+	}
+
+	void OnTriggerEnter(Collider other) 
+	{
+		if((other.gameObject == Owner) || (other.gameObject.name == "Shield")) {
+
+			Debug.Log("hitting self");
+			
+		} else {
+			coll.enabled = false;
 		
+			if (other.GetComponent<Rigidbody>()) {
+				Debug.Log("apply force to "+other.name);
+				// Apply force to the target object - calculate force
+				
+				if(other.tag == "Player") {
+					//--apply more force when hitting player
+					forceAmount = forceAmount*5;
+				}
+				Vector3 force = tr.forward * forceAmount;
+				
+		//		force.y = 0;
+				other.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+				
+				Destroy(Vfx);
+
+				if(ParticleObj){
+					ParticleObj.GetComponent<ParticleSystem>().emissionRate = 0;
+				}
+			}
+			
+			//--spawn an explosion
+			GameObject explosionInstance = Instantiate(Explosion,
+				transform.position, 
+				transform.rotation
+			);
+			explosionInstance.transform.localScale = new Vector3(explosionScale,explosionScale,explosionScale);
+			
+			Destroy(explosionInstance,3);
+
+		}
 	}
 }
-
 
 // #pragma strict
 

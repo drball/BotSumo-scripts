@@ -13,11 +13,11 @@ private var vfxObj : GameObject;
 private var abilityCountDownInitial : int = 10;
 
 //--vars for Bot B
-private var BulletEmitter1 : GameObject;
-private var BulletEmitter2 : GameObject;
-private var fireFromL : boolean; //--alternates whether fire from L or R
-private var fireRateNormal : float = 0.75;
-private var fireRate : float = fireRateNormal;
+// private var BulletEmitter1 : GameObject;
+// private var BulletEmitter2 : GameObject;
+// private var fireFromL : boolean; //--alternates whether fire from L or R
+// private var fireRateNormal : float = 0.75;
+// private var fireRate : float = fireRateNormal;
 
 //--vars for cog bot
 private var cogSpeedInitial : int; //--get this from cogSpinScript
@@ -45,12 +45,7 @@ function Start () {
 		
 	InvokeRepeating("Countdown", 0, 1);
 		
-	if(PlayerScript.playerCharacter == "B")
-	{	
-		// BulletEmitter1 = transform.Find("BulletEmitter1").gameObject;
-		// BulletEmitter2 = transform.Find("BulletEmitter2").gameObject;
-
-	} else if (PlayerScript.playerCharacter == "Cog"){
+	if (PlayerScript.playerCharacter == "Cog"){
 		cog = transform.Find("CogWrapper").gameObject;
 		cogSpinScript = cog.GetComponent.<SpinTransform>();
 		cogSpeedInitial = cogSpinScript.spinZ;
@@ -128,11 +123,7 @@ function ActivateAbility () {
 	PlayerScript.alive = false;
 	
 	//--each character has different abilities
-	if(PlayerScript.playerCharacter == "B")
-	{
-		// InvokeRepeating("FireBullet", 0, fireRate);
-
-	}else if(PlayerScript.playerCharacter == "Cog") {
+	if(PlayerScript.playerCharacter == "Cog") {
 
 		//--increase speed of spinning cog
 		cogSpinScript.spinZ = cogSpinScript.spinZ + cogSpeedInitial;
@@ -194,11 +185,7 @@ function DisableAbility() {
 
 	BroadcastMessage("DisableAbilityBroadcast");
 
-	if(PlayerScript.playerCharacter == "B")
-	{
-		// CancelInvoke("FireBullet");
-
-	} else if(PlayerScript.playerCharacter == "Cog"){
+	if(PlayerScript.playerCharacter == "Cog"){
 		cogSpinScript.spinZ = cogSpeedInitial;
 		bounceBackScript.ResetForceAmt();
 
@@ -251,5 +238,5 @@ function FireLaser(){
 		);
 
 	//--set the owner of this bullet
-	bulletInstance.GetComponent.<BulletScript>().Owner = gameObject;
+	// bulletInstance.GetComponent.<BulletScript>().Owner = gameObject;
 }
