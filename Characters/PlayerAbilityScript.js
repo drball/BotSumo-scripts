@@ -13,11 +13,11 @@ private var vfxObj : GameObject;
 private var abilityCountDownInitial : int = 10;
 
 //--vars for Bot B
-// private var BulletEmitter1 : GameObject;
+private var BulletEmitter1 : GameObject;
 // private var BulletEmitter2 : GameObject;
 // private var fireFromL : boolean; //--alternates whether fire from L or R
-// private var fireRateNormal : float = 0.75;
-// private var fireRate : float = fireRateNormal;
+private var fireRateNormal : float = 0.75;
+private var fireRate : float = fireRateNormal;
 
 //--vars for cog bot
 private var cogSpeedInitial : int; //--get this from cogSpinScript
@@ -46,11 +46,11 @@ function Start () {
 	InvokeRepeating("Countdown", 0, 1);
 		
 	if (PlayerScript.playerCharacter == "Cog"){
-		cog = transform.Find("CogWrapper").gameObject;
-		cogSpinScript = cog.GetComponent.<SpinTransform>();
-		cogSpeedInitial = cogSpinScript.spinZ;
-		bounceBackScript = GetComponent.<BounceBack>();
-		Debug.Log("cog spin value = "+cogSpeedInitial);
+		// cog = transform.Find("CogWrapper").gameObject;
+		// cogSpinScript = cog.GetComponent.<SpinTransform>();
+		// cogSpeedInitial = cogSpinScript.spinZ;
+		// bounceBackScript = GetComponent.<BounceBack>();
+		// Debug.Log("cog spin value = "+cogSpeedInitial);
 
 	} else if (PlayerScript.playerCharacter == "Solar"){
 		Invoke("FindOpponent", 1);
@@ -125,13 +125,13 @@ function ActivateAbility () {
 	//--each character has different abilities
 	if(PlayerScript.playerCharacter == "Cog") {
 
-		//--increase speed of spinning cog
-		cogSpinScript.spinZ = cogSpinScript.spinZ + cogSpeedInitial;
-		if(cogSpinScript.spinZ > cogSpinMax) {
-			cogSpinScript.spinZ = cogSpinMax;
-		}
-		Debug.Log("new cogspeed is "+cogSpinScript.spinZ);
-		bounceBackScript.ChangeForceAmt(cogSpinScript.spinZ);
+		// //--increase speed of spinning cog
+		// cogSpinScript.spinZ = cogSpinScript.spinZ + cogSpeedInitial;
+		// if(cogSpinScript.spinZ > cogSpinMax) {
+		// 	cogSpinScript.spinZ = cogSpinMax;
+		// }
+		// Debug.Log("new cogspeed is "+cogSpinScript.spinZ);
+		// bounceBackScript.ChangeForceAmt(cogSpinScript.spinZ);
 
 	}else if(PlayerScript.playerCharacter == "Solar") {
 
@@ -183,11 +183,11 @@ function DisableAbility() {
 
 	Debug.Log("back to normal");
 
-	BroadcastMessage("DisableAbilityBroadcast");
+	SendMessage("DisableAbilityBroadcast");
 
 	if(PlayerScript.playerCharacter == "Cog"){
-		cogSpinScript.spinZ = cogSpeedInitial;
-		bounceBackScript.ResetForceAmt();
+		// cogSpinScript.spinZ = cogSpeedInitial;
+		// bounceBackScript.ResetForceAmt();
 
 	} else if(PlayerScript.playerCharacter == "Solar"){
 		CancelInvoke("FireLaser");
