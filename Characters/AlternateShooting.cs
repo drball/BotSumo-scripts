@@ -19,7 +19,7 @@ public class AlternateShooting : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
+	// called by PlayerAbility using sendmessage
 	void ActivateAbilityBroadcast(){
 		Debug.Log("Activate yus!");
 		InvokeRepeating("FireBullet", 0, fireRate);
