@@ -20,11 +20,11 @@ public class _RotateCustom : MonoBehaviour {
         if (obj.transform.rotation.x >= 0.4 || obj.transform.rotation.z >= 0.4)
         {
             stopAll = true;
-            Debug.Log("Stop");
+            // Debug.Log("Stop");
         }else if (obj.transform.rotation.x <= -0.4 || obj.transform.rotation.z <= -0.4)
         {
             stopAll = true;
-            Debug.Log("Stop");
+            // Debug.Log("Stop");
         }
         else
         {

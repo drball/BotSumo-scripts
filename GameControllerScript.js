@@ -55,6 +55,7 @@ function Start () {
 		RInstruction.SetActive(false);
 
 	}else {
+		Debug.Log("disable playerseeker");
 		Player2.gameObject.Find("PlayerSeeker").SetActive(false);
 	}
 

@@ -22,9 +22,9 @@ private var fireRate : float = fireRateNormal;
 //--vars for cog bot
 private var cogSpeedInitial : int; //--get this from cogSpinScript
 private var cog : GameObject;
-private var cogCollider : Collider;
-private var cogSpinScript : SpinTransform;
-private var bounceBackScript : BounceBack;
+// private var cogCollider : Collider;
+// private var cogSpinScript : SpinTransform;
+// private var bounceBackScript : BounceBack;
 private var cogSpinMax : int = 950;
 private var cogSpinCollider : int = 950;
 

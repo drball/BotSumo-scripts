@@ -5,9 +5,9 @@ using UnityEngine;
 public class CogSpinAbility : MonoBehaviour {
 
 	private float cogSpeedInitial; //--get this from cogSpinScript
-	public GameObject cog;
+	// public GameObject cog;
 	private Collider cogCollider;
-	public rotate SpinScript;
+	public rotate SpinScript; //--yes the script is called "rotate"
 	public BounceBackScript bounceBackScript;
 	private float cogSpinMax = 950f;
 	private float cogSpinCollider = 950f;
