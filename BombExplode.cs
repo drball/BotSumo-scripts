@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class BombExplode : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public GameObject Explosion;
+	public Transform explosionPos;
+
+	void CreateExplosion(){
+		GameObject explosionInstance = Instantiate(Explosion, explosionPos.position, explosionPos.rotation);
+
+		Destroy(gameObject,2);
+		Destroy(explosionInstance,2);
 	}
 	
 }

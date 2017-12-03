@@ -14,8 +14,10 @@ public var SinglePlayer : boolean = false;
 public var RBtn : GameObject; //--used for removing this when in single player mode
 public var RInstruction : GameObject;
 
+public var test : GameObject;
+
 private var winningScore : int = 5;
-private var defaultPlayer : String = "B"; //A B C Cog, SpinningArms, Solar
+private var defaultPlayer : String = "Pooper"; //A B C Cog, SpinningArms, Solar
 private var AdvertController : AdvertController;
 private var LevelsController : LevelsController; 
 
@@ -46,9 +48,12 @@ function Start () {
 
 	LevelsController = GameObject.Find("LevelsController").GetComponent.<LevelsController>();
 
+	test = Player2.gameObject.Find("PlayerSeeker");
+
 	//--if the game is single player, disable the normal player movement script
 	//--and activate the object containing single player scripts
 	if(LevelsController.singlePlayer) {
+		Debug.Log("this is single player mode");
 		Player2.GetComponent.<PlayerMovement>().enabled = false;
 		Player2.gameObject.Find("PlayerSeeker").SetActive(true);
 		RBtn.SetActive(false);
@@ -57,6 +62,7 @@ function Start () {
 	}else {
 		Debug.Log("disable playerseeker");
 		Player2.gameObject.Find("PlayerSeeker").SetActive(false);
+		RBtn.SetActive(true);
 	}
 
 	Debug.Log("start the level");
@@ -86,7 +92,7 @@ function LoadPlayer(dummyObjName, playerNum){
 		
 		//--for debug - if we load this scene without the player selection
 		if(playerNum == 1){
-			playerToLoad = "Player1B";
+			playerToLoad = "Player1Pooper";
 		}
 	}
 	
@@ -97,6 +103,8 @@ function LoadPlayer(dummyObjName, playerNum){
 		PlayerDummy.transform.position, 
 		PlayerDummy.transform.rotation
 	);
+
+	Debug.Log("loaded "+playerInstance.name);
 	
 	return playerInstance;
 }
@@ -187,9 +195,6 @@ function EndRound() {
 		Reset();
 		
 	}
-
-	
-	
 }
 
 //function Update()

@@ -6,27 +6,37 @@ public class PooperAbilityScript : MonoBehaviour {
 
 	public GameObject BombEmitter;
 	public GameObject Bomb;
-	private float fireRateNormal = 1f;
+	private float fireRateNormal = 2.5f;
 	private float fireRate;
 	private Vector3 emitterPos;
+	public Animator anim;
 
 	// Use this for initialization
 	void Start () {
-		emitterPos = BombEmitter.transform.position;
+		fireRate = fireRateNormal;
 	}
 	
 	// called by PlayerAbility using sendmessage
 	void ActivateAbilityBroadcast(){
 		Debug.Log("Activate yus!");
-		InvokeRepeating("CreateBomb", 0, fireRate);
+		InvokeRepeating("MakeSquat", 0, fireRate);
+		// InvokeRepeating("CreateBomb", 0.2f + 0.15f, fireRate);
 	}
 
 	void DisableAbilityBroadcast(){
 		Debug.Log("Disable yus!");
-		CancelInvoke("CreateBomb");
+		CancelInvoke("MakeSquat");
+	}
+
+	void MakeSquat(){
+		anim.SetTrigger("StartCountdown");
 	}
 
 	void CreateBomb() {
+
+		//--called by trigger on squatanimation
+
+		emitterPos = BombEmitter.transform.position;
 		
 		GameObject bombInstance = Instantiate(Bomb, emitterPos, transform.rotation);
 		
