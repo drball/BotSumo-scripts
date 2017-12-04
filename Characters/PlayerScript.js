@@ -37,11 +37,7 @@ function Start () {
 		Btn = GameObject.Find("LInstruction");
 	} else {
 		Btn = GameObject.Find("RInstruction");
-		
 	}
-
-
-	
 }
 
 
